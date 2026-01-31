@@ -1,0 +1,47 @@
+# AI RPI Protocol Configuration
+
+# Enforcement level: strict, advisory, or disabled
+enforcement: advisory
+
+# Required phases - all must be completed
+phases:
+  - research
+  - plan
+  - implement
+
+# Checkpoints - mandatory verification points
+checkpoints:
+  research_complete:
+    required: true
+    criteria:
+      - "All key questions answered"
+      - "Technical constraints documented"
+  
+  plan_approved:
+    required: true
+    criteria:
+      - "Tasks clearly defined"
+      - "Success criteria established"
+      - "Risks identified and mitigated"
+  
+  implementation_verified:
+    required: true
+    criteria:
+      - "Tests passing"
+      - "Documentation updated"
+      - "Security scan clean"
+
+# Optional: Custom rules
+rules:
+  - name: "Challenge vague requirements"
+    enabled: true
+    description: "Require specific, measurable requirements"
+  
+  - name: "Require test coverage"
+    enabled: true
+    threshold: 80
+  
+  - name: "Security scanning"
+    enabled: true
+    tools:
+      - codeql
