@@ -46,10 +46,10 @@ Reduce /api/users endpoint response time to under 500ms.
 
 ### Tasks
 - [x] Create migration for new index
-- [ ] Update User query to eager load roles
-- [ ] Add query performance logging
-- [ ] Test with production data volume
-- [ ] Deploy during maintenance window
+- [x] Update User query to eager load roles
+- [x] Add query performance logging
+- [x] Test with production data volume
+- [x] Deploy during maintenance window
 
 ### Success Criteria
 - [ ] Response time < 500ms (currently 5-8s)

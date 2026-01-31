@@ -13,8 +13,8 @@
 [Document your research findings here]
 
 ## Key Insights
-- 
-- 
+- [Add key insight here]
+- [Add another key insight here]
 
 ## Next Steps
 - [ ] Move to Plan phase once research is complete

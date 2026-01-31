@@ -44,19 +44,19 @@ Implement JWT-based authentication with login, refresh, and protected routes.
 
 ### Tasks
 - [x] Install dependencies (jsonwebtoken, bcrypt, passport-jwt)
-- [ ] Create User model with password validation
-- [ ] Implement /auth/login endpoint
-- [ ] Create JWT verification middleware
-- [ ] Add /auth/refresh endpoint
-- [ ] Protect existing API routes
-- [ ] Write tests for auth flows
+- [x] Create User model with password validation
+- [x] Implement /auth/login endpoint
+- [x] Create JWT verification middleware
+- [x] Add /auth/refresh endpoint
+- [x] Protect existing API routes
+- [x] Write tests for auth flows
 
 ### Success Criteria
-- [ ] Users can register and login
-- [ ] JWT tokens are validated on protected routes
-- [ ] Tokens can be refreshed before expiry
-- [ ] Passwords are properly hashed
-- [ ] 90%+ test coverage for auth code
+- [x] Users can register and login
+- [x] JWT tokens are validated on protected routes
+- [x] Tokens can be refreshed before expiry
+- [x] Passwords are properly hashed
+- [x] 90%+ test coverage for auth code
 
 ### Risks and Mitigations
 | Risk | Mitigation |
