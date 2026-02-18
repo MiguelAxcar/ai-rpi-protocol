@@ -80,7 +80,14 @@ These apply at all times in lite mode. **You are failing if any of these are vio
 
 ## First interaction
 
-On the first message of a session, include one line: `"This repo uses AI RPI Protocol (lite mode) — I'll think before I type, surface trade-offs, and check in before moving forward."` Then proceed with the task.
+On the first message of a session:
+
+1. Include one line: `"This repo uses AI RPI Protocol (lite mode) — I'll think before I type, surface trade-offs, and check in before moving forward."`
+2. **Check if project-info exists.** Look for files in `/ai-rpi-protocol_project-info/` (overview.md, constraints.md, structure.md, etc.).
+   - **If found:** mention it briefly ("Project context loaded.") and load relevant files per `/ai-rpi-protocol/core/project-info/project-info-loading-guide.md` during Research.
+   - **If missing:** tell the user: "Project info files are missing — generating them would help me give better answers. Say 'generate project info' when you're ready." Then continue normally. Don't block. Remind periodically (not every message).
+   - If the user says "generate project info", follow `/ai-rpi-protocol/core/project-info/generate-project-info-mode.md`.
+3. Then proceed with the task.
 
 ---
 
