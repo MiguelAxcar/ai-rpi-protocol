@@ -1,0 +1,13 @@
+# User-specific files (don't commit)
+user-preferences/preferences.md
+
+# IDE
+.vscode/
+.idea/
+.clause/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
