@@ -20,3 +20,21 @@ Chat output (lean):
 - Recommendation (short)
 - Key trade-offs/risks (short)
 - Gate question: "Ready to implement? [yes/no]"
+
+## Code review and multi-issue tasks
+
+When Research phase produce a list of independent issues (such as code reviews, audits, quality assessments, security review), Planning means **advise per issue** insteald of "pick one approach for the whole task"
+
+For each issue found in Research, provide:
+- Why it's bad (concrete impact)
+- Options/alternatives to fix it (genuinely distinct, per anti-anchoring rules)
+- Trade-offs of each option
+- A suggested approach with reasoning
+
+When reviewing flag when similar features have different architecture, so user can decide.
+
+Flag anything which differe from project info standards and engineering best practices from `/ai-rpi-protocol/core/rules/engineering-best-practices.md` but user decide
+
+Use the per issue format from `/ai-rpi-protocol/templates/code-review-output-template.md`.
+
+The gate for review-style tasks is: "Which issues do you want to fix? Want to adjust any suggested approaches?"

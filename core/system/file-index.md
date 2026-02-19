@@ -49,6 +49,8 @@ purpose: file map and load order; output: list of path + purpose/output/use when
 
 /ai-rpi-protocol/templates/restate-feature-request.md - purpose: restate feature request; output: scoped spec; use when: new feature ask.
 /ai-rpi-protocol/templates/restate-bugfix-request.md - purpose: restate bugfix; output: reproduction + expected behavior; use when: bug reports.
+/ai-rpi-protocol/templates/restate-code-review-request.md - purpose: restate code review request; output: scoped review spec; use when: user asks to review, audit, or examine code.
+/ai-rpi-protocol/templates/code-review-output-template.md - purpose: code review per-issue output template; output: structured advice per issue; use when: Planning phase of a code review task.
 /ai-rpi-protocol/templates/restate-other-request.md - purpose: restate misc asks; output: clarified scope; use when: unclear task type.
 /ai-rpi-protocol/templates/context-handoff-artifact.md - purpose: clean restart template; output: copyable new chat prompt; use when: topic drift or phase handoff.
 /ai-rpi-protocol/templates/welcome-message.md - purpose: first message template; output: welcome + phase + mode + profile; use when: first user interaction.

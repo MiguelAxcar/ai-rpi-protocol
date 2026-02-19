@@ -51,7 +51,8 @@ purpose: classify user requests; output: which template to use; use when: unclea
 - "Look at this code, any issues?"
 - "Examine this for performance problems"
 
-**Template:** `restate-other-request.md` (Code Review type)
+**Template:** `restate-code-review-request.md`
+**Output template:** `code-review-output-template.md` (used during Planning — per-issue options and advice)
 
 ---
 
