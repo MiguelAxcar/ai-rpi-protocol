@@ -8,7 +8,7 @@
 
 ## TL;DR
 
-Make AI code suggestions more reliable and less error prone in your IDE in 1 minute. This framework is a bunch of instructions finely tested and cured fed from hundreds of real engineering coding sessions, to make your AI coding assistant much smarter and assertive. In practice, this means some more tokens consumed but it pays off with *fewer wrong implementations, fewer rewrites, and better decisions earlier*. With you still in control. Benefits:
+Make AI code suggestions more reliable and less error prone in your IDE in 1 minute. This framework is a bunch of instructions finely tested and cured from hundreds of real engineering coding sessions, to make your AI coding assistant much smarter and assertive. In practice, this means some more tokens consumed but it pays off with *fewer wrong implementations, fewer rewrites, and better decisions earlier*. With you still in control. Benefits:
 - AI doesn’t jump to code without understanding context
 - Identifies assumptions, potential risks, and alternatives early
 - Reduces rework and token waste, because correctness > speed
@@ -37,16 +37,16 @@ No new tools. No plugins. No config. Just markdown files, tuned from hundreds of
 
 You keep prompting as usual. Under the hood, your AI assistant will now:
 
-- **Researche first** — explores your codebase and surfaces what's actually true before proposing anything
+- **Research first** — explores your codebase and surfaces what's actually true before proposing anything
 - **Challenge weak ideas** — pushes back on vague requirements, hidden assumptions, and risky shortcuts instead of just agreeing. Won't just say yes because you sound confident
 - **Show you real options** — presents genuinely different approaches with real trade-offs, not one good idea dressed up as three. Anti-anchoring rules make sure every option is actually worth picking
-- **Display evidences** — references specific files and lines from your codebase, not vibes. If it can't prove something exist, it tell you instead of making it up
+- **Display evidence** — references specific files and lines from your codebase, not vibes. If it can't prove something exist, it tells you instead of making it up
 - **Calibrate confidence** — distinguishes what it verified from what it's guessing. You always know what to trust and what to double-check
-- **Resists the urge to rush** — the eager-beaver reflex is real: the model is trained to help immediately, which usually mean skipping the thinking. This framework override that reflex
-- **Enforces engineering best practices** — it will warn you if you try to store passwords in plain text, concatenate SQL strings, commit API keys to git, swallow exceptions silently, or skip tests on critical paths. It flag them before the code is even written. [Fully customizable](./core/rules/engineering-best-practices.md)
-- **Stay transparent** — when the protocol influence a decision, the AI tell you what it did and why. No invisible guardrails
+- **Resists the urge to rush** — the eager-beaver reflex is real: the model is trained to help immediately, which usually mean skipping the thinking. This framework overrides that reflex
+- **Enforces engineering best practices** — it will warn you if you try to store passwords in plain text, concatenate SQL strings, commit API keys to git, swallow exceptions silently, or skip tests on critical paths. It flags them before the code is even written. [Fully customizable](./core/rules/engineering-best-practices.md)
+- **Stay transparent** — when the protocol influences a decision, the AI tells you what it did and why. No invisible guardrails
 
-Think of it as an exoskeleton, not an autopilot: it reduce the cognitive load (search, recall, comparison) and expand visibility (assumptions, risks, trade offs) but decisions and accountability stays with you, the engineer.
+Think of it as an exoskeleton, not an autopilot: it reduce the cognitive load (search, recall, comparison) and expand visibility (assumptions, risks, trade-offs) but decisions and accountability stays with you, the engineer.
 
 In practice, this means *fewer wrong implementations, fewer rewrites, and better decisions earlier*. With you still in control.
 
@@ -54,11 +54,11 @@ In practice, this means *fewer wrong implementations, fewer rewrites, and better
 
 Yes. A bit more upfront. The assistant will research before coding, ask questions before assuming, and present options before writing code. That cost tokens.
 
-But here's what I've seen over and over: the real token burn is not in thinking, but in rework. A wrong implementation that need to be debugged, reverted, replanned, rebuilt from scratch cost way more than spending a few extra tokens getting it right the first time.
+But here's what I've seen over and over: the real token burn is not in thinking, but in rework. A wrong implementation that need to be debugged, reverted, replanned, rebuilt from scratch costs way more than spending a few extra tokens getting it right the first time.
 
-Most of the token waste I see in AI assisted coding come from solving the wrong problem fast. The assistant jumps to code, the engineer accept because it looks right, and three rounds later they're still fixing the same thing. That's expensive, in tokens, in time, and in trust.
+Most of the token waste I see in AI assisted coding come from solving the wrong problem fast. The assistant jumps to code, the engineer accepts it because it looks right, and three rounds later they're still fixing the same problem. That's expensive, in tokens, in time, and in trust.
 
-This framework front loads the thinking (without outsourcing it) so you spend tokens on correctness instead of on rework. In practice, it tend to break even or save tokens on anything non trivial, because you stop going in circles.
+This framework front-loads the thinking (without outsourcing it) so you spend tokens on correctness instead of on rework. In practice, it tends to break even or save tokens on anything non-trivial, because you stop going in circles.
 
 ## More about problems this framework expect to solve
 
@@ -67,10 +67,10 @@ AI coding assistants tend to:
 - **Jump-to-code behavior** - ask "how do I handle auth?" and get 200 lines of JWT before anyone asks what kind of auth you need
 - **Yes-machine responses** - "_store passwords in localStorage_" >> "_great idea, here's how_". [Research shows](https://aclanthology.org/2025.findings-emnlp.121.pdf) RLHF amplifies sycophancy
 - **Confident wrongness** - "_this regex handles all email formats_" (**no it doesn't**), "_this is thread-safe_" (**no it isn't**), "_this regex can parse HTML_" ([you can't parse HTML with regex!](https://stackoverflow.com/a/1732454))
-- **Vibe coding** - code that looks right but doesn't handle edge cases, follow patterns, or consider scale
+- **Vibe coding** - code that looks right but doesn't handle edge cases, follows patterns, or considers scale
 - **Scope creep disguised as help** - ask to fix a button and get a full component refactor you didn't ask for, with new abstractions and renamed files
-- **Copy-paste architecture** - AI grabs a pattern from Stack Overflow or its training data and drops it in, ignoring that your codebase already has conventions for that exact thing
-- **Silent assumption filling** - you leave a detail ambiguous and instead of asking, AI picks the worst default and builds on top of it
+- **Copy-paste architecture** - AI grabs a pattern from Stack Overflow or its training data and drops it in, ignoring that your codebase already has conventions in place
+- **Silent assumption filling** - you leave a detail ambiguous and instead of asking AI picks the worst default and builds on top of it
 - **Amnesia across turns** - AI forgets what it just researched two messages ago and starts contradicting its own findings - context handling
 - **Hallucinated confidence** - "_the API supports batch mode_" (**it doesn't**), "_this library handles that natively_" (**there's no such method**), "_this is the recommended approach_" (**recommended by whom?**)
 - **Zero trade-off answers** - every suggestion sounds perfect with no downsides mentioned. No complexity cost, no performance impact, no maintenance burden - just "_here's the solution_"
@@ -80,7 +80,7 @@ AI coding assistants tend to:
 - **Not a new tool to learn** - it's markdown files that live in your repo
 - **Not rigid** - escape commands let you bypass it anytime (`ignore framework`, `just do it`)
 - **Not a replacement for your IDE** - it works alongside VS Code, Cursor, Claude Code, Zed, Windsurf, and others
-- **Not a guarantee** - this protocol relies on AI voluntarily following instructions. LLMs can and will ignore parts of it, specially in long conversations or with certain model/IDE combinations. It improves behavior, it doesn't control it
+- **Not a guarantee** - this protocol relies on AI voluntarily following instructions. LLMs can and _will ignore_ parts of it, specially in long conversations or with certain model/IDE combinations. It improves behavior, it doesn't control it
 
 ## Installation
 
@@ -185,7 +185,7 @@ Check the [compliance checklist](./core/rules/compliance-checklist.md) - observa
 - **Escape commands** - `skip`, `quick`, `just do it`, `ignore framework`
 
 ### Memory and context
-- **Session memory** - `decisions.md`, `research-cache.md`, `plans/` persist across phases
+- **Session memory** - `decisions.md`, `research-cache.md`, `plans/` persists across phases
 - **Silent memory handling** - manages memory behind the scenes, reconstructs if missed
 - **Context attention** - load only what you need, never load the same file twice
 - **Topic drift handling** - detect conversation drift, offers clean handoff
