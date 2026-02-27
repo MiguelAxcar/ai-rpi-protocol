@@ -43,9 +43,9 @@ purpose: plan artifact template; output: structured plan .md; use when: Planning
 
 ## Implementation steps
 
-1. [Step] — files: [which files], why: [reasoning]
-2. [Step] — files: [which files], why: [reasoning]
-3. [Step] — files: [which files], why: [reasoning]
+- [ ] [Step] — files: [which files], why: [reasoning]
+- [ ] [Step] — files: [which files], why: [reasoning]
+- [ ] [Step] — files: [which files], why: [reasoning]
 
 ## Files to touch
 

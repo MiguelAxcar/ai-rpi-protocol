@@ -1,7 +1,1 @@
-**MANDATORY — do this before anything else:**
-
-1. Read the file `/AGENTS.md` at the root of this repository.
-2. Follow every instruction in it — including protocol loading, mode detection, and adapter selection.
-3. Do NOT skip any step. Do NOT write code, give advice, or produce any output until the protocol defined in `AGENTS.md` has been fully loaded and its gates have been satisfied.
-
-Failure to follow `/AGENTS.md` is a protocol violation.
+**MANDATORY** — Read `/AGENTS.md` before anything else. Follow every instruction in it. Do NOT skip. Do NOT write code, give advice, or produce any output until `AGENTS.md` has been fully read and followed. Failure to do so is a protocol violation.

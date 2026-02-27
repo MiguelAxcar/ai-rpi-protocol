@@ -2,7 +2,7 @@ purpose: file map and load order; output: list of path + purpose/output/use when
 
 /ai-rpi-protocol/core/system/protocol-full.md - purpose: enforce protocol and load order (full mode); output: hard blockers + references; use when: mode is set to full.
 /ai-rpi-protocol/core/system/protocol-lite.md - purpose: lean protocol entry point (lite mode); output: core files + on-demand loading; use when: mode is set to lite or not set.
-/ai-rpi-protocol/AGENTS.md - purpose: root AGENTS scaffold and protocol router; output: configuration + protocol loading; use when: install or setup.
+/ai-rpi-protocol/AGENTS.md - purpose: entry point; ask user, detect mode, route to protocol-lite or protocol-full; output: protocol loading; use when: every new conversation.
 /ai-rpi-protocol/CLAUDE.md - purpose: Claude Code entry point; output: loads AGENTS.md; use when: Claude Code CLI or VS Code extension.
 /ai-rpi-protocol/README.md - purpose: project intro and setup; output: what RPI is and how to install; use when: onboarding or reference.
 /ai-rpi-protocol/CHANGELOG.md - purpose: version history; output: notable changes; use when: checking releases or version.
@@ -30,11 +30,14 @@ purpose: file map and load order; output: list of path + purpose/output/use when
 /ai-rpi-protocol/core/rules/context-attention.md - purpose: reduce token burn; output: what to load and skip; use when: before loading any file.
 /ai-rpi-protocol/core/rules/token-discipline.md - purpose: reduce token burn without reducing correctness; output: lean chat summaries + referenced memory artifacts; use when: every task, every phase, every response.
 /ai-rpi-protocol/core/rules/code-generation-rules.md - purpose: enforce code quality after generation; output: linter check + pattern compliance; use when: after generating or modifying code.
+/ai-rpi-protocol/core/rules/on-files-changed.md - purpose: trigger post-change checks whenever files get changed; output: lint run, project-info update check, repo checks; use when: after any turn where project files were created, modified, or deleted.
 /ai-rpi-protocol/core/rules/compliance-checklist.md - purpose: observable protocol compliance indicators; output: green/red flags + recovery actions; use when: verifying AI is following the protocol.
 /ai-rpi-protocol/core/rules/engineering-best-practices.md - purpose: enforce well-known engineering best practices; output: suggestions + flags during Planning and Implementation; use when: always loaded.
 /ai-rpi-protocol/core/rules/anti-hallucination.md - purpose: prevent confident references to things that don't exist; output: verified claims + explicit uncertainty; use when: every response that references APIs, libraries, methods, or config.
 /ai-rpi-protocol/core/rules/confidence-calibration.md - purpose: distinguish verified facts from guesses; output: calibrated confidence signals; use when: every response with technical claims.
 /ai-rpi-protocol/core/rules/anti-anchoring.md - purpose: prevent fake options that dress up a single idea as multiple; output: genuinely distinct alternatives; use when: Planning phase, any multi-option response.
+/ai-rpi-protocol/core/rules/questions-format.md - purpose: standardize how questions are asked; output: question + explanation + recommendation; use when: asking open questions, clarifying questions, or presenting choices.
+/ai-rpi-protocol/core/rules/self-improvement.md - purpose: learn from mistakes across sessions; output: lessons written to memory; use when: user corrects the AI or points out a mistake.
 
 /ai-rpi-protocol/core/phases/research.md - purpose: guide investigation; output: findings with evidence; use when: Research phase.
 /ai-rpi-protocol/core/phases/planning.md - purpose: design before code; output: 2 to 3 options + trade offs; use when: Plan phase.
@@ -44,6 +47,7 @@ purpose: file map and load order; output: list of path + purpose/output/use when
 /ai-rpi-protocol/core/project-info/project-info-loading-guide.md - purpose: load project truths; output: what to load based on task; use when: before Research if project-info exists.
 /ai-rpi-protocol/core/project-info/generate-project-info-mode.md - purpose: block RPI until project-info exists; output: generate flow and file list; use when: project-info empty and user accepts.
 /ai-rpi-protocol/core/project-info/generate-project-info-workflow.md - purpose: generate project-info by researching codebase; output: stable project-info files; use when: Generate Project Info mode.
+/ai-rpi-protocol/core/project-info/custom-instructions-template.md - purpose: template for custom-instructions.md; output: content to write to ai-rpi-protocol_project-info/custom-instructions.md; use when: generating project info.
 
 /ai-rpi-protocol/user-preferences/preferences.md - purpose: user style and global rules; output: overrides for other rules; use when: always check early and honor precedence.
 
@@ -81,8 +85,10 @@ purpose: file map and load order; output: list of path + purpose/output/use when
 /ai-rpi-protocol_project-info/stack-patterns.md - purpose: stack and pattern conventions; output: how to structure code; use when: Planning and Implementation.
 /ai-rpi-protocol_project-info/integrations.md - purpose: external systems and APIs; output: integration context; use when: research involves external services.
 /ai-rpi-protocol_project-info/monitoring.md - purpose: logging, metrics, observability; output: monitoring context; use when: research involves logging or metrics.
+/ai-rpi-protocol_project-info/custom-instructions.md - purpose: user preferences and custom instructions; output: overrides and preferences to honor; use when: project info is loaded (all phases).
 
 /ai-rpi-protocol/memory/session-state.md - purpose: current task and phase status; output: session state artifact; use when: phase transitions or resume.
 /ai-rpi-protocol/memory/research-cache.md - purpose: research findings with evidence; output: research cache artifact; use when: Research completed.
 /ai-rpi-protocol/memory/decisions.md - purpose: decisions and rationale; output: decisions artifact; use when: meaningful decision or trade off.
 /ai-rpi-protocol/memory/metrics-log.md - purpose: task metrics log (tokens, catches, rework); output: metrics rows; use when: Implementation completed or "show metrics" command.
+/ai-rpi-protocol/memory/lessons.md - purpose: mistake patterns and prevention rules; output: lessons to review at session start; use when: after user corrections.

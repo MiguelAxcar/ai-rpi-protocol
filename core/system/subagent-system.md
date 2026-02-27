@@ -10,6 +10,12 @@ Subagents are focused research tasks that the AI delegates to a separate executi
 
 Not all IDEs support subagents. If the current environment doesn't, do the research directly — the workflow is the same, just without the delegation.
 
+## Why subagents matter
+
+Every file read and every search in the main agent competes for attention with protocol rules, conversation history, and decision context. Subagents keep the main context window clean by doing heavy exploration in a separate context and returning structured results.
+
+For complex problems, use subagents proactively — offload exploration and parallel analysis rather than loading everything into the main thread. One focused task per subagent produces better results than one agent juggling many concerns. Think of subagents as a way to scale compute without polluting context.
+
 ## Available subagents
 
 ### 1. Codebase Researcher

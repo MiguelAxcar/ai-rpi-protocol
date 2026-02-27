@@ -33,6 +33,7 @@ This is not automatic recall. It is structured note-taking. Its value is proport
 | `/ai-rpi-protocol/memory/plans/{task}-plan.md` | Approved plan | Planning approved |
 | `/ai-rpi-protocol/memory/decisions.md` | Decisions and rationale | Any meaningful decision |
 | `/ai-rpi-protocol/memory/metrics-log.md` | Task metrics (tokens, catches, rework) | Implementation completed |
+| `/ai-rpi-protocol/memory/lessons.md` | Mistake patterns and prevention rules | After user corrections |
 
 ## RPI Phase exit checklist
 
