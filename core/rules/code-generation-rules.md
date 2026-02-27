@@ -2,6 +2,8 @@ purpose: enforce code quality after generation; output: linter check + pattern c
 
 # Code Generation Rules
 
+**Trigger:** These checks run as part of the "whenever files get changed" trigger. See `/ai-rpi-protocol/core/rules/on-files-changed.md` for the full post-change checklist (lint, project-info update, repo commands).
+
 MANDATORY: Run these checks after generating ANY code.
 
 ## 1. Linter Check (BLOCKER)

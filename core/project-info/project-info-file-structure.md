@@ -149,6 +149,20 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
+### 9. `custom-instructions.md` (Always generated)
+
+**Purpose:** User-defined instructions and preferences; fully editable by the user.
+**Content:**
+- Header telling the user they are free to add whatever they want (with examples)
+- Placeholder examples of custom instructions (e.g. "When commenting code, explain WHY not WHAT")
+- Bullet list for the user to add their own items
+
+**Why:** Gives the user a single place to express preferences (tone, code style, process) that the assistant loads with project info. Not stable project truth — it's owned by the user.
+
+**Generation:** Always create this file when generating project info. Use content from `/ai-rpi-protocol/core/project-info/custom-instructions-template.md`.
+
+---
+
 ## File Naming Convention
 
 **Format:** `kebab-case.md` (lowercase, hyphens)
@@ -175,7 +189,8 @@ Based on best practices and your existing codebase, here's the proposed structur
     ├── standards.md             # Core: Code quality standards
     │
     ├── integrations.md          # Optional: External services
-    └── monitoring.md            # Optional: Monitoring & debugging
+    ├── monitoring.md            # Optional: Monitoring & debugging
+    └── custom-instructions.md   # User preferences (always generated)
 ```
 
 ---
@@ -190,6 +205,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 6. **standards.md** (quality standards)
 7. **integrations.md** (if detected)
 8. **monitoring.md** (if detected)
+9. **custom-instructions.md** (always; user edits after generation)
 
 ---
 

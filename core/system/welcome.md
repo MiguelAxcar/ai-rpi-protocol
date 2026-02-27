@@ -1,45 +1,28 @@
-# AGENTS.md
+purpose: protocol entry point after user accepts; output: mode routing, adapter loading, protocol rules; use when: user accepts AI RPI Protocol from AGENTS.md.
 
-This repo has [AI RPI Protocol](https://github.com/MiguelAxcar/ai-rpi-protocol) available.
-
-## What to do on every new conversation
-
-1. Read this file first.
-2. Look at what the user asked.
-3. **Ask the user** if they want to use AI RPI Protocol for this task. Briefly explain what it does (thinks before acting, surfaces trade-offs, follows Research >> Plan >> Implement with gates). Suggest a mode:
-   - **Lite (default):** Lean governance — core rules loaded on demand, good for most tasks.
-   - **Full:** Comprehensive governance — all rules loaded upfront, best for architecture changes, security-sensitive work, multi-system migrations, or high-risk production changes.
-   - Recommend lite unless the task clearly warrants full. Explain why you recommend what you recommend.
-4. **If the user accepts:** Continue to the "Protocol loading" section below.
-5. **If the user declines:** Stop here. Do not load any other `ai-rpi-protocol` files. Proceed normally without the protocol.
-
-STOP and DON'T DO ANYTHING before receiving user answer.
-
----
-
-## Protocol loading
+# AI RPI Protocol — Welcome
 
 The user accepted AI RPI Protocol. Follow every step below.
 
-### Step 1: Detect mode
+---
 
-Read the `mode:` field below (or what the user chose when accepting).
+## Step 1: Detect mode
 
-mode: lite  # Options: lite | full — user can override when accepting
+Read the `mode:` field in AGENTS.md (or what the user chose when accepting).
 
 - `lite` (or not set) → load `/ai-rpi-protocol/core/system/protocol-lite.md`
 - `full` → load `/ai-rpi-protocol/core/system/protocol-full.md`
 
 Default to **lite** if unclear.
 
-### Step 2: Load adapters
+## Step 2: Load adapters
 
 1. **IDE adapter** (pick one): `/ai-rpi-protocol/adapters/ides/cursor.md` | `vscode.md` | `windsurf.md` | `zed.md` | `claude-code.md`
 2. **Model adapter** (pick one): `/ai-rpi-protocol/adapters/models/claude.md` | `gpt.md` | `gemini.md` | `deepseek.md` | `grok.md` | `local.md`
 
 If you cannot read a file, ask the user to provide it. Do not skip.
 
-### Step 3: Follow the loaded protocol
+## Step 3: Follow the loaded protocol
 
 Once protocol-lite or protocol-full is loaded, follow its instructions. Do not reply with advice or code until you have completed the mandatory loading steps defined in the protocol file.
 
@@ -105,14 +88,3 @@ Say something like: "This looks like high-impact work. You might benefit from fu
 4. **Everything else** — formatting, tone, memory, templates
 
 When unsure which rule applies, ask the user. Don't guess.
-
----
-
-## Fallback
-
-If you cannot load protocol files, follow this minimal set:
-- **Think first:** Pause before acting. Identify uncertainty, constraints, and failure modes.
-- **Anti sycophancy:** Challenge weak requirements. Surface trade-offs and alternatives.
-- **Anti hallucination:** Verify before referencing. Never invent APIs, methods, or file paths.
-- **Confidence calibration:** Distinguish facts from guesses. Never present a guess as a fact.
-- **RPI order:** Research >> Planning >> Implementation, each with a gate — advance only on explicit confirmation.

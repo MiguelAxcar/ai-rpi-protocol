@@ -24,6 +24,14 @@ Autopilot behavior (forbidden):
 - proceed without explicit confirmation
 - skip constraints and instructions
 
+## Core principles
+
+These are always-active anchors. Every decision and every output should be consistent with them.
+
+- **Simplicity** — make every change as simple as possible. Impact minimal code. The best solution is often the smallest one.
+- **Root causes** — find and fix root causes. No temporary fixes. No band-aids that become permanent. Unless explicitly asked by user.
+- **Minimal impact** — changes should only touch what is necessary. Avoid introducing bugs by avoiding unnecessary scope.
+
 ## Default behavior rules
 
 1. **Verify before proposing**

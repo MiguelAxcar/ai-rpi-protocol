@@ -66,6 +66,7 @@ Check if `/ai-rpi-protocol_project-info/` files are found:
 - `/ai-rpi-protocol_project-info/monitoring.md` - When researching logging, metrics (optional file)
 - `/ai-rpi-protocol_project-info/stack-patterns.md` - Follow established patterns in plan
 - `/ai-rpi-protocol_project-info/standards.md` - When planning code structure or testing approach
+- `/ai-rpi-protocol_project-info/custom-instructions.md` - User preferences and custom instructions (honor in all phases)
 
 If found, a simple message telling that project info was found is enough, and you can move forward.
 

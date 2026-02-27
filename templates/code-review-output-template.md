@@ -44,6 +44,10 @@ purpose: code review per-issue output template; output: structured advice per is
 
 **[Option N]** — [1-2 sentences: why this is the recommended path, considering the project context and trade-offs above.]
 
+### Suggested rule for custom-instructions (optional)
+
+If this issue reflects a repeatable pattern or preference (e.g. "don't use X here, use Y"), suggest one abstract rule the user can add to `custom-instructions.md` so future code avoids the same finding. Example: *"Don't use useEffect when [situation X]; prefer [Y]."* Skip if the issue is one-off or not generalizable.
+
 ---
 
 ## Summary
@@ -52,5 +56,7 @@ purpose: code review per-issue output template; output: structured advice per is
 |---|-------|----------|--------------------|--------|
 | 1 | [title] | [sev] | [approach] | [effort] |
 | 2 | [title] | [sev] | [approach] | [effort] |
+
+**Suggested additions to custom-instructions (optional):** [List any abstract rules suggested per issue that the user may add to `custom-instructions.md` to avoid the same findings in future code.]
 
 **Gate:** Which issues do you want to fix? Want to adjust any of the suggested approaches? [approve all / select specific / adjust]

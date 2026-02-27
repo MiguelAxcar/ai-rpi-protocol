@@ -50,6 +50,14 @@ BEHAVIOUR
 SELF CHECK
 - Before any decision or output, perform a self-check: `/ai-rpi-protocol/core/rules/self-check.md`
 
+SELF-IMPROVEMENT
+- After user corrections, capture lessons: `/ai-rpi-protocol/core/rules/self-improvement.md`
+
+VERIFICATION BEFORE DONE
+- In Thoughtful and Comprehensive modes, implementation must demonstrate correctness — not just claim it.
+- Beyond lint and tests: verify that behavior changed as intended. Diff before/after when relevant.
+- Quality bar: "Would a staff engineer approve this change?"
+
 ENGINEERING BEST PRACTICES
 - Load and enforce during Planning and Implementation: `/ai-rpi-protocol/core/rules/engineering-best-practices.md`
 
@@ -62,8 +70,12 @@ CONFIDENCE CALIBRATION
 ANTI ANCHORING
 - Present genuinely distinct options, not straw men: `/ai-rpi-protocol/core/rules/anti-anchoring.md`
 
+QUESTIONS FORMAT
+- When asking non-trivial questions (open, clarifying, or choices), use `/ai-rpi-protocol/core/rules/questions-format.md`: question, short explanation, recommendation. If the user does not choose, proceed with the recommendation.
+
 PROJECT INFO
-- Load project info files: `/ai-rpi-protocol/core/project-info/project-info-loading-guide.md`
+- Load project info files per `/ai-rpi-protocol/core/project-info/project-info-loading-guide.md` (includes `custom-instructions.md` when present).
+- If project-info is missing and user says "generate project info", follow `/ai-rpi-protocol/core/project-info/generate-project-info-mode.md`.
 
 RPI Protocol
 - phases.md already loaded above — do not re-read
@@ -71,6 +83,11 @@ RPI Protocol
    - Research: `/ai-rpi-protocol/core/phases/research.md`
    - Planning: `/ai-rpi-protocol/core/phases/planning.md`
    - Implement: `/ai-rpi-protocol/core/phases/implementation.md`
+- Whenever files get changed: Load and apply `/ai-rpi-protocol/core/rules/on-files-changed.md` (lint, project-info update check, repo checks).
+
+CODE REVIEW
+- For code review requests: use `/ai-rpi-protocol/templates/restate-code-review-request.md` to scope; in Planning use `/ai-rpi-protocol/templates/code-review-output-template.md` per issue. Follow planning.md for review flow.
+- Load and apply `/ai-rpi-protocol_project-info/custom-instructions.md` when project-info exists; findings and advice must honor custom instructions.
 
 MEMORY
 - Load `/ai-rpi-protocol/core/rules/memory-handling.md`

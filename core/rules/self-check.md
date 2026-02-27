@@ -22,14 +22,19 @@ MANDATORY: Run before any decision or output.
    - Am I surfacing trade-offs and risks?
    - Am I following the instructions instead of shortcutting? (anti-eager-beaver)
 
-4. **Compliance markers present?**
+4. **Solution quality?** (skip for trivial/obvious fixes)
+   - For non-trivial changes: is this the solution I would write knowing everything I know now, or is it the first thing that worked?
+   - Would a staff engineer approve this? Not just "does it work" but "is it right."
+   - If the solution feels hacky, redo it with full knowledge rather than patching it.
+
+5. **Compliance markers present?**
    - Does my response mention the current phase?
    - If a phase is ending, does it include a gate question?
 
-5. **Memory current?** (for modes that require it)
+6. **Memory current?** (for modes that require it)
    - Before phase transitions, are the relevant memory files updated?
 
-6. **User preferences honored?**
+7. **User preferences honored?**
    - Check `/ai-rpi-protocol/user-preferences/preferences.md` if it exists
 
 ## If any check fails

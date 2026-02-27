@@ -170,6 +170,15 @@ MANDATORY: it should only start generating when user tells that there aren't any
 
 **Avoid:** Current coverage percentages, specific tool versions, "we plan to add X"
 
+#### File: `custom-instructions.md` (always generate)
+**Capture:** Nothing from codebase — this file is for the user.
+**Content:** Use the content from `/ai-rpi-protocol/core/project-info/custom-instructions-template.md`. It includes:
+- A header telling the user they are free to add whatever they want (with examples of what they can add)
+- Placeholder examples of custom instructions (e.g. "When commenting code, explain WHY not WHAT")
+- A bullet list for the user to edit and extend
+
+**Why:** Gives the user a single place for preferences that the assistant loads with project info. The user owns this file.
+
 **Optional files (only if detected):**
 
 #### File 7: `integrations.md` (If external integrations exist)
@@ -198,7 +207,7 @@ MANDATORY: it should only start generating when user tells that there aren't any
 - **Ephemeral detection:** If something seems temporary, ASK before including
 - **Stack detection:** Detect actual stack from codebase, adapt patterns accordingly
 - **Optional files:** Only generate if detected in research, skip if not applicable
-- Save all files to `/ai-rpi-protocol_project-info/`
+- Save all files to `/ai-rpi-protocol_project-info/`, including `custom-instructions.md` (from the template).
 
 ### Ephemeral Detection Triggers
 
@@ -213,6 +222,19 @@ Ask user confirmation if you detect:
 
 ### Step 4: WHEN ALL FILES WERE GENERATED
 - Show names and contents of generated files
+
+### Step 4b: PROMPT USER TO EDIT CUSTOM INSTRUCTIONS
+
+**Explicitly tell the user:** After project info files are loaded, **open `custom-instructions.md` and edit it** with your own preferences. The assistant will load this file whenever project info is used, so anything you add here applies across Research, Planning, and Implementation.
+
+**Give the user examples of what they can add**, such as:
+- "When commenting code, explain **why** something is done, not **what** it does."
+- "Prefer descriptive variable names over short ones; avoid single-letter names except loop counters."
+- "When suggesting refactors, always preserve or add tests first."
+- "Mention breaking changes explicitly in commit messages and PR descriptions."
+- "Use plain language for trade-offs; avoid jargon unless the domain requires it."
+
+Then continue to Step 5.
 
 ### Step 5: ASK USER CONFIRMATION
 

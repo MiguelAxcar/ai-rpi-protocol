@@ -27,6 +27,6 @@ purpose: restate code review request; output: scoped review spec; use when: user
 1. [Question about scope/focus preferences]
 (...)
 
-**Next:** I'll read the code, surface issues with evidence, then advise on each with options and trade-offs.
+**Next:** I'll read the code, surface issues with evidence, then advise on each with options and trade-offs. When project-info exists, I'll apply `custom-instructions.md` so the review aligns with your stated preferences.
 
 Does this match what you want? [yes/no/adjustments]

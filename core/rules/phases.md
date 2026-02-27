@@ -47,6 +47,8 @@ If unsure, ask.
 Each phase ends with a gate question.
 Do not advance without a valid confirmation.
 
+When a gate involves choices (e.g. which option, which issues to fix), use the format in `/ai-rpi-protocol/core/rules/questions-format.md`: for each choice, give question, explanation, and recommendation; if the user does not choose, use the recommendation.
+
 Valid confirmations: yes, confirmed, proceed, go ahead, or any explicit instruction to move forward.
 Not confirmations: enthusiasm, extra details, or vague agreement.
 
@@ -84,7 +86,7 @@ Minimum outputs from Research:
 * Current flow (inputs, outputs, state boundaries)
 * Constraints that apply (security, compliance, patterns, conventions)
 * Risk and assumption list (what could break, what is unclear)
-* Open questions that block safe planning (only if truly blocking)
+* Open questions that block safe planning (only if truly blocking). For each open question use the format in `/ai-rpi-protocol/core/rules/questions-format.md`: question, explanation (what it means, why it matters), recommendation (and why). If the user does not choose, use the recommendation.
 
 Mandatory behavior:
 * prefer subagent based codebase research when available
@@ -165,6 +167,12 @@ Silent memory responsibility:
 
 Deviation rule:
 * if new information forces plan changes, pause and request approval before deviating
+
+When the plan breaks:
+* A deviation is a minor adjustment. A broken plan is different — it means a core assumption was wrong, a constraint was missed, or the approach is fundamentally unworkable.
+* If implementation reveals the plan was fundamentally wrong, do not push through. Stop, explain what broke and why, and return to Planning with the new information.
+* Research findings still apply unless they are also invalidated. You do not need to redo Research unless the broken plan exposed a gap in what was investigated.
+* This is not a failure — it is the protocol working. Plans are hypotheses; implementation is the test.
 
 Details live in: `/ai-rpi-protocol/core/phases/implementation.md`
 

@@ -13,6 +13,7 @@ Project-info files should be loaded **on demand** based on the current phase and
 **Always Load (if exists):**
 - `/ai-rpi-protocol_project-info/overview.md` - Understand what the project is, domain, tech stack
 - `/ai-rpi-protocol_project-info/constraints.md` - Understand limitations and rules before researching
+- `/ai-rpi-protocol_project-info/custom-instructions.md` - User preferences and custom instructions (honor in all phases)
 
 **Load When Relevant:**
 - `/ai-rpi-protocol_project-info/structure.md` - When navigating codebase to find relevant files
@@ -25,6 +26,7 @@ Project-info files should be loaded **on demand** based on the current phase and
 **Always Load (if exists):**
 - `/ai-rpi-protocol_project-info/constraints.md` - Ensure plans respect non-negotiable rules
 - `/ai-rpi-protocol_project-info/stack-patterns.md` - Follow established patterns in plan
+- `/ai-rpi-protocol_project-info/custom-instructions.md` - User preferences and custom instructions
 
 **Load When Relevant:**
 - `/ai-rpi-protocol_project-info/standards.md` - When planning code structure or testing approach
@@ -38,6 +40,7 @@ Project-info files should be loaded **on demand** based on the current phase and
 - `/ai-rpi-protocol_project-info/constraints.md` - Enforce rules during implementation
 - `/ai-rpi-protocol_project-info/stack-patterns.md` - Follow patterns consistently
 - `/ai-rpi-protocol_project-info/standards.md` - Apply code style and conventions
+- `/ai-rpi-protocol_project-info/custom-instructions.md` - User preferences and custom instructions
 
 **Load When Relevant:**
 - `/ai-rpi-protocol_project-info/structure.md` - When creating new files/modules
@@ -49,9 +52,9 @@ Project-info files should be loaded **on demand** based on the current phase and
 
 ### 1. Essential Files (Load Early)
 Load these at the start of each phase if they exist:
-- **Phase R:** overview.md, constraints.md
-- **Phase P:** constraints.md, stack-patterns.md
-- **Phase I:** constraints.md, stack-patterns.md, standards.md
+- **Phase R:** overview.md, constraints.md, custom-instructions.md
+- **Phase P:** constraints.md, stack-patterns.md, custom-instructions.md
+- **Phase I:** constraints.md, stack-patterns.md, standards.md, custom-instructions.md
 
 ### 2. Context-Sensitive Files (Load as Needed)
 Load these only when the task requires them:
@@ -78,6 +81,7 @@ Don't load all files at once. Load them when:
 | `standards.md` | Code style, testing, git practices | Phase I (mandatory) |
 | `integrations.md` | External APIs, rate limits | When working with integrations |
 | `monitoring.md` | Logging, metrics, observability | When adding monitoring (optional) |
+| `custom-instructions.md` | User preferences, custom instructions | All phases (load when exists) |
 
 ## Token Conservation
 
