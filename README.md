@@ -8,7 +8,11 @@
 
 ## TL;DR
 
-Framework of a bunch of instructions finely tested and cured fed from hundreds of real engineering coding sessions, to make your AI coding assistant much smarter and assertive. In practice, this means some more tokens consumed but it pays off with *fewer wrong implementations, fewer rewrites, and better decisions earlier*. With you still in control.
+Make AI code suggestions more reliable and less error prone in your IDE in 1 minute. This framework is a bunch of instructions finely tested and cured fed from hundreds of real engineering coding sessions, to make your AI coding assistant much smarter and assertive. In practice, this means some more tokens consumed but it pays off with *fewer wrong implementations, fewer rewrites, and better decisions earlier*. With you still in control. Benefits:
+- AI doesn’t jump to code without understanding context
+- Identifies assumptions, potential risks, and alternatives early
+- Reduces rework and token waste, because correctness > speed
+- Integrates with common IDEs and flows (Cursor, VS Code, Claude, etc)
 
 ## Quick install
 
