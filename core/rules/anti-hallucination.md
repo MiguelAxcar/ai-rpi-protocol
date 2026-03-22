@@ -4,7 +4,7 @@ purpose: prevent confident references to things that don't exist; output: verifi
 
 LLMs generate text that sounds correct. Sounding correct and being correct are completely different things.
 
-Hallucination in coding assistants shows up as:
+Hallucination in coding agents shows up as:
 - Referencing API methods that don't exist
 - Suggesting libraries or packages that were never published
 - Citing configuration options that the tool doesn't support

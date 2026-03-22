@@ -4,12 +4,23 @@ purpose: standardize how questions are asked; output: question + explanation + r
 
 When you ask the user a question (open questions, clarifying questions, or multiple choices at gates), use this structure. **Every time** you ask questions, include recommendations.
 
+Why this matters:
+- AI-RPI should ask only relevant questions
+- explanation quality is part of protocol quality
+- a good question reduces bureaucracy because the user understands why the friction exists
+
 ## Structure per question
 
 1. **Question** — The actual question, stated clearly.
 2. **Explanation** — What it means and why it matters (impact on design, consistency, risk, or scope).
 3. **Recommendation** — Your recommended answer or choice, with brief reasoning.
 4. **Default** — If the user does not answer or says "your call" / "up to you", proceed with the recommendation.
+
+Strong explanation guidance:
+- explain what was detected
+- explain why it matters
+- explain what goal is being protected
+- explain what consequence is being avoided when relevant
 
 ## When this applies
 
@@ -20,7 +31,7 @@ When you ask the user a question (open questions, clarifying questions, or multi
 
 ## Example (condensed)
 
-**Q:** Do you want a 1:1 match with Dart/PHC naming, or follow the pattern (Action for writes, Query for reads)?
+**Q:** Do you want a 1:1 match with project xyz naming, or follow the pattern (Action for writes, Query for reads)?
 
 **What it means / why it matters:** Strict matching keeps naming aligned with the other codebase but can be brittle if that side changes. Pattern-based naming keeps intent clear and is easier to extend.
 
@@ -34,3 +45,5 @@ You are failing if you ask a non-trivial question without:
 - the understanding that no answer means use the recommendation.
 
 Trivial yes/no confirmations (e.g. "Ready to implement? [yes/no]") do not require the full block; for any question that involves a real choice or ambiguity, use the full format.
+
+If a question would not materially improve quality, clarity, or safety, prefer not asking it.

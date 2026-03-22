@@ -1,6 +1,8 @@
+purpose: lightweight task-quality and protocol-quality log; output: lean metrics rows; use when: Implementation completed or "show metrics" command.
+
 # Metrics Log
 
-Automatically updated by the AI at the end of each completed task.
+Lightweight quality log updated by the AI when a lean metrics row is useful.
 
-| Date | Task | Mode | Gates adj. | Escapes | Catches | Tokens used | Tokens saved (est.) | Rework | Notes |
-|------|------|------|-----------|---------|---------|-------------|--------------------| -------|-------|
+| Date | Task | Mode | Depth | Outcome | Noise | Corrections | Validation | Flex/Tighten | Notes |
+|------|------|------|-------|---------|-------|-------------|------------|--------------|-------|

@@ -46,8 +46,8 @@ Do: use workspace aware chat context to locate relevant code, extract file refer
 When: user approved a plan that touches multiple files
 Do: apply edits in the order defined by the plan, keep each batch small, and stop after each batch with a short diff summary
 
-### Inline suggestions for Quick mode
-When: operation level is Quick, typo, rename, comment, tiny refactor
+### Inline suggestions for minimal depth
+When: execution depth is minimal, typo, rename, comment, tiny refactor
 Do: use inline suggestions only for the minimal change, then validate quickly and finish
 
 ### Problems panel and diagnostics

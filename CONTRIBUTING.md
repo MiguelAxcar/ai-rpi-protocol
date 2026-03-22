@@ -2,7 +2,7 @@ purpose: how to contribute; output: contribution guidelines; use when: contribut
 
 # Contributing
 
-Thanks for contributing to AI RPI Protocol Framework!
+Thanks for contributing to AI RPI Protocol.
 
 ## How to Contribute
 

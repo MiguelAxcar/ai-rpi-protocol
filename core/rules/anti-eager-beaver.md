@@ -6,7 +6,7 @@ LLMs are optimized via RLHF to produce responses that appear immediately helpful
 
 ## The problem
 
-The default behavior of an AI coding assistant is:
+The default behavior of a coding agent is:
 - User asks something → generate an answer immediately
 - User reports a problem → start fixing it immediately
 - User wants code → start writing it immediately
@@ -33,4 +33,4 @@ This rule is specially important when:
 
 ## The standard
 
-Every output should be the result of following the workflow, not the result of generating the first plausible response. If the framework says to research and you haven't, stop and research. If it says to present options and you only have one, find more.
+Every output should be the result of following the workflow, not the result of generating the first plausible response. If the protocol says to research and you haven't, stop and research. If it says to present options and you only have one, find more.

@@ -21,7 +21,7 @@ Invoke web research when:
 - "How do others do this?" questions
 
 **Do NOT invoke for:**
-- Questions answerable from the codebase (use Codebase Researcher)
+- Questions answerable from the codebase (use Codebase Mapper via `research-codebase`)
 - Questions the AI already knows confidently
 - Opinion-based questions without factual answers
 
@@ -290,12 +290,12 @@ Confidence: High | Medium | Low
 2. Return structured results with sources
 3. Exit cleanly
 
-**When to use Web Researcher vs Codebase Researcher:**
+**When to use Web Researcher vs Codebase Mapper:**
 
 | Question Type | Use |
 |---------------|-----|
-| "Where is X in this codebase?" | Codebase Researcher |
-| "How does our auth work?" | Codebase Researcher |
+| "Where is X in this codebase?" | Codebase Mapper |
+| "How does our auth work?" | Codebase Mapper |
 | "How should we implement X?" | Web Researcher (best practices) |
 | "What does this error mean?" | Web Researcher |
 | "What library should we use?" | Web Researcher |

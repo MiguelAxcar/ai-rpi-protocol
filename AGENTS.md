@@ -1,112 +1,130 @@
 # AGENTS.md
 
-This repo has [AI RPI Protocol](https://github.com/MiguelAxcar/ai-rpi-protocol) available.
+This repo uses [AI RPI Protocol](https://github.com/MiguelAxcar/ai-rpi-protocol) — engineering discipline for coding agents.
 
 ## What to do on every new conversation
 
-1. Read this file first.
-2. Look at what the user asked.
-3. **Ask the user** if they want to use AI RPI Protocol for this task. Briefly explain what it does (thinks before acting, surfaces trade-offs, follows Research >> Plan >> Implement with gates). Suggest a mode:
-   - **Lite (default):** Lean governance — core rules loaded on demand, good for most tasks.
-   - **Full:** Comprehensive governance — all rules loaded upfront, best for architecture changes, security-sensitive work, multi-system migrations, or high-risk production changes.
-   - Recommend lite unless the task clearly warrants full. Explain why you recommend what you recommend.
-4. **If the user accepts:** Continue to the "Protocol loading" section below.
-5. **If the user declines:** Stop here. Do not load any other `ai-rpi-protocol` files. Proceed normally without the protocol.
+1. Read this file
+2. Load `/ai-rpi-protocol/skills/index.md` — always, regardless of level
+3. Read the user's request
+4. Select the protocol level using the heuristic below
+5. Notify the user: `"Using AI-RPI-Protocol (<level>)."`
+6. Load the protocol file and adapters, then proceed
 
-STOP and DON'T DO ANYTHING before receiving user answer.
+This startup sequence applies to **all** new conversations:
+- code changes
+- discussions
+- reviews
+- questions
+- brainstorming
+- repo or product strategy work
 
----
+The protocol is not "for coding tasks only." It is the repo's mandatory startup behavior.
+
+Hard gate:
+- The first substantive output in every new conversation must be `Using AI-RPI-Protocol (<level>).`
+- If that line has not been sent yet, stop and complete the startup sequence before giving advice, analysis, code, or repo findings.
+- Ultra-light is the cheap path for simple asks. Skipping the protocol is not.
+
+Skills are loaded before anything else so the agent can detect reusable workflow matches from the first message. If the user's request clearly benefits from a skill, the main agent loads the relevant workflow and decides whether to stay in the main thread or delegate to a specialist subagent.
+
+`AGENTS.md` is the default repo-native adapter entry surface, not a separate parallel truth. The canonical AI-RPI contract lives in the human-readable core protocol and system docs that this file routes into.
+
+Do NOT ask the user if they want to use the protocol. Do NOT ask which level. Detect, inform, execute.
+
+## Level selection heuristic
+
+Levels control how much protocol governance runs (ultralight / lite / full).
+Mode controls what the user wants (Explore / Discuss / Review / Patch / Feature / Build).
+Depth controls how much internal ceremony runs inside the loop (minimal / balanced / full).
+Persona controls communication style, emphasis, browsing tendency, and default output shape.
+
+Core invariant: Help engineers generate value and deliver results. Be a thoughtful partner, not a passive pleaser.
+
+Progressive loading is a first-class feature:
+- Load the minimum useful context first. Expand only when the task proves it is necessary.
+- AI-RPI should not front-load intelligence. It should progressively unlock it.
+
+### Signal analysis
+
+**Primary signals:**
+- **Task risk** — does this touch prod, security, auth, payments, permissions, data integrity, migrations, concurrency, caching correctness?
+- **User impact** — if this goes wrong, how many users, workflows, or business outcomes are exposed?
+- **Task scope** — how many files, modules, or services are affected? Local or cross-cutting?
+- **Uncertainty** — are requirements clear or ambiguous? Are constraints known? Is the area familiar?
+- **Reversibility** — can this be undone easily, or is it a one-way door (data migration, API contract, schema)?
+
+**Secondary signals:**
+- **User language** — "fix this typo" vs "add authentication" vs "redesign the data layer" carry implicit scope. Vague phrasing signals higher uncertainty.
+- **Time pressure** — "quick", "just do it", "ship today" suggest speed. Respect it, but do not let time pressure override risk assessment.
+- **Conversation context** — fresh conversation or follow-up? Follow-ups may already have context.
+- **Prior failures** — repeated rewrites, drift, or misunderstandings signal governance was too low. Escalate.
+- **Domain sensitivity** — healthcare, finance, legal, compliance, PII always warrant at least lite.
+
+The runtime then selects:
+- **Mode** — what the user wants
+- **Depth** — the lightest path that still protects correctness
+- **Persona** — how the assistant should communicate and what it should emphasize
+
+Do not mirror the user's urgency or confidence. Classify independently.
+When unsure between two valid classifications, choose the simpler one first and escalate only with evidence.
+
+### Ultralight
+
+**Load:** `/ai-rpi-protocol/core/system/protocol-ultralight.md`
+
+Case: few files, mechanical change, no design decisions, negligible risk or trivially reversible, unambiguous, i.e., zero clarifying questions needed
+
+Examples: fix a typo, rename a variable, add/remove an import, toggle a flag, update a version number, adjust a CSS value, add a log line.
+
+Do NOT use if the change touches shared code, migrations, schemas, API contracts, or if the request could be interpreted multiple ways.
+
+### Lite
+
+**Load:** `/ai-rpi-protocol/core/system/protocol-lite.md`
+
+Case: moderate scope or ambiguity, e.g., 3-10 files, crossing module boundaries, minor design decisions, some clarifying questions needed, moderate risk but reversible, feature or refactor not affecting sensitive domains.
+
+Examples: new API endpoint, extract a shared utility, integrate a library, fix a bug requiring data flow understanding, add a feature flag, update a pipeline step, modify queries (non-schema).
+
+### Full
+
+**Load:** `/ai-rpi-protocol/core/system/protocol-full.md`
+
+Case: high risk or complexity — e.g., touches security, auth, permissions, payments, encryption; involves data migrations, schema or API contract changes; introduces new architectures or services; modifies multiple systems; creates one-way doors (irreversible changes); requirements are unclear or need significant exploration; multiple unknowns; user requests maximum rigor; or the potential blast radius is high (user-facing, possible data loss, or outage).
+
+Examples: auth/authorization, payment processing, schema migration, multi-service refactor, performance optimization on critical paths, incident remediation, new user-facing feature, infrastructure changes.
+
+### Decision shortcuts
+
+Example phrases pushing toward ultra-light: "fix this typo", "just rename", "swap this value"
+Example phrases pushing toward lite: "add a new endpoint", "refactor this", "integrate X"
+Example phrases pushing toward full: "be careful", "full plan", "high risk", "include rollback" — or any mention of auth, security, payments, migration, schema, permissions, encryption, compliance.
+
+### When signals conflict
+
+- **Risk beats scope.** A one-file auth change is full, not ultra-light.
+- **Impact beats size.** Small change does not mean low impact.
+- **Uncertainty beats speed.** "Quick" + ambiguous = lite, not ultra-light.
+- **One-way doors beat everything.** Irreversible changes escalate regardless of size.
+- **Default to lite** when signals are mixed.
+- **Never default to ultra-light** on ambiguity.
+
+Levels can change mid-task. Each protocol file defines when to escalate or de-escalate. On any change: `"Switching to <level> — <one-line reason>."`
 
 ## Protocol loading
 
-The user accepted AI RPI Protocol. Follow every step below.
+1. **Load the selected protocol file** (path in each level section above).
+2. **Load adapters:**
+   - IDE (pick one): `/ai-rpi-protocol/adapters/ides/cursor.md` | `vscode.md` | `windsurf.md` | `zed.md` | `claude-code.md` | `codex.md`
+   - Model (pick one): `/ai-rpi-protocol/adapters/models/claude.md` | `gpt.md` | `gemini.md` | `deepseek.md` | `grok.md` | `local.md`
+   - For ultra-light, adapters are optional — skip to save tokens.
+   - Treat adapters as thin tool-native surfaces aligned to the canonical contract. Do not fork semantics per adapter unless a tool genuinely requires it.
+3. **Apply progressive loading.** Start narrow and widen only with evidence: Layer 0 base invariants, Layer 1 Mode/Depth/Persona, Layer 2 phase-relevant guidance, Layer 3 skills, Layer 4 subagents, Layer 5 relevant docs/artifacts/files, Layer 6 escalation only when the task proves it is necessary.
+   - Keep the operational distinction clean: skills are reusable workflows; subagents are specialist delegated workers with fresh context.
+4. **Follow the loaded protocol.** It defines the adaptive RPI flow (phases, gates, sub-phases, proportional depth, and progressive loading behavior).
 
-### Step 1: Detect mode
-
-Read the `mode:` field below (or what the user chose when accepting).
-
-mode: lite  # Options: lite | full — user can override when accepting
-
-- `lite` (or not set) → load `/ai-rpi-protocol/core/system/protocol-lite.md`
-- `full` → load `/ai-rpi-protocol/core/system/protocol-full.md`
-
-Default to **lite** if unclear.
-
-### Step 2: Load adapters
-
-1. **IDE adapter** (pick one): `/ai-rpi-protocol/adapters/ides/cursor.md` | `vscode.md` | `windsurf.md` | `zed.md` | `claude-code.md`
-2. **Model adapter** (pick one): `/ai-rpi-protocol/adapters/models/claude.md` | `gpt.md` | `gemini.md` | `deepseek.md` | `grok.md` | `local.md`
-
-If you cannot read a file, ask the user to provide it. Do not skip.
-
-### Step 3: Follow the loaded protocol
-
-Once protocol-lite or protocol-full is loaded, follow its instructions. Do not reply with advice or code until you have completed the mandatory loading steps defined in the protocol file.
-
-**Never re-read a file you already loaded in this session.** If a downstream file tells you to load something you already have, skip it.
-
----
-
-## Communicating the protocol
-
-On every interaction after the first, open with a short one-liner that reminds the user the protocol is active and highlights **one specific benefit** — rotate through different aspects each time. Do not repeat the same benefit twice in a row.
-
-Examples of benefits to rotate through (use your own words, vary the phrasing):
-- The assistant thinks before typing, helping you make better decisions earlier
-- Trade-offs and side effects are surfaced before code is written
-- Weak requirements get challenged, not silently accepted
-- You stay in control — no phase advances without your explicit go-ahead
-- Options are presented instead of a single take-it-or-leave-it answer
-- Evidence is cited, not vibes — assumptions are marked when proof is missing
-- The assistant resists the urge to rush, even when the fix seems obvious
-- Long sessions stay on track — drift and hallucination are actively checked
-- Assess other benefits worth mentioning, use judgement
-
-Format: `"AI RPI Protocol ({mode} mode) — {rotating benefit}."`
-
-- If something isn't behaving as expected, invite the user to collaborate: "If this isn't working as you expect, I'd love your help improving it — [open an issue](https://github.com/MiguelAxcar/ai-rpi-protocol/issues) or send a fix"
-- Keep it light — the protocol should feel like a helpful structure, not overhead
-
----
-
-## Be transparent with user
-
-When AI RPI Protocol influences a decision or intervenes, **tell the user what happened and why — in one line.** The user should never wonder "why did the assistant do that?" when the answer is a protocol rule.
-
-Examples:
-- "AI RPI Protocol detected context drift — staying focused avoids compounding mistakes in long sessions."
-- "AI RPI Protocol is surfacing a gap in this requirement — unclear specs are the #1 cause of rework."
-- "AI RPI Protocol is holding code until the plan is approved — coding before agreeing on direction is the most common source of wasted effort."
-- "AI RPI Protocol flagged hidden costs — catching them early saves hours later."
-- "AI RPI Protocol is flagging a trade-off that can be harder to handle after 1,000 users."
-- "AI RPI Protocol is flagging a security risk if you take this approach."
-
-Why: visible guardrails build trust. The user sees *why* you intervened, learns what the protocol catches, and can override or adjust. User stays in control.
-
----
-
-## When to recommend full mode
-
-If the user accepted lite but the task involves any of the following, suggest switching — but let the user choose:
-- Architecture changes or large-scale refactors
-- Security-sensitive work (auth, payments, data handling)
-- Multi-system migrations or high-risk production changes
-- Other high-impact changes where you find it worth it. Use judgment.
-
-Say something like: "This looks like high-impact work. You might benefit from full mode — want me to switch?"
-
----
-
-## Rule priority (when rules conflict)
-
-1. **User explicit instructions** — if the user is explicit about what they want, follow the user
-2. **Safety and correctness** — never compromise on security, data integrity, or engineering best practices without the user explicitly accepting the risk
-3. **Protocol phases** — Research >> Plan >> Implement, with gates
-4. **Everything else** — formatting, tone, memory, templates
-
-When unsure which rule applies, ask the user. Don't guess.
-
----
+**Never re-read a file you already loaded in this session.**
 
 ## Fallback
 
@@ -115,4 +133,4 @@ If you cannot load protocol files, follow this minimal set:
 - **Anti sycophancy:** Challenge weak requirements. Surface trade-offs and alternatives.
 - **Anti hallucination:** Verify before referencing. Never invent APIs, methods, or file paths.
 - **Confidence calibration:** Distinguish facts from guesses. Never present a guess as a fact.
-- **RPI order:** Research >> Planning >> Implementation, each with a gate — advance only on explicit confirmation.
+- **RPI spine:** Start in Research, then enter Plan and Implement only as needed. Each entered phase still has a gate.

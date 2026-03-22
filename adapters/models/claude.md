@@ -9,17 +9,17 @@ Anthropic ships models in tiers. Model names change across generations, but the 
 **Flagship (Opus-class):**
 - Strongest instruction following and reasoning. Handles full protocol load well.
 - Extended thinking excels here — use it for complex planning and self-check.
-- Best fit for Comprehensive mode and architecture-level tasks.
+- Best fit for full execution depth and architecture-level tasks.
 
 **Balanced (Sonnet-class):**
 - Strong instruction following with good speed. Default expectation for most protocol work.
 - Extended thinking available and useful, but be selective — use it for genuinely complex reasoning, not every response.
-- Sweet spot for Streamlined and Thoughtful modes.
+- Sweet spot for moderate execution depth and much of full-depth work.
 
 **Fast (Haiku-class):**
 - Optimized for speed and cost. Instruction following is good but degrades on complex multi-step rules.
 - Lean loading recommended: prioritize `phases.md` and the current phase file. Skip advanced features (memory writes, subagent delegation) unless results are consistent.
-- Best fit for Quick mode and simple tasks.
+- Best fit for minimal execution depth and simple tasks.
 
 ## General model characteristics
 
@@ -41,7 +41,7 @@ Extended thinking is a distinct capability in Claude models where the model reas
 - Confidence calibration on technical claims — verify in thinking, state confidently or with caveats in output
 
 **When NOT to use extended thinking:**
-- Trivial tasks (typo fixes, simple lookups, Quick mode work)
+- Trivial tasks (typo fixes, simple lookups, minimal-depth work)
 - When the answer is already clear from context — thinking on obvious questions wastes tokens
 - Simple gate questions or confirmations
 
@@ -78,6 +78,9 @@ Claude generates comments that narrate what the code does ("// Initialize the co
 
 **Boilerplate closings:**
 Claude appends "Let me know if you need anything else!" or "Happy to help with anything else!" to responses. Adds zero value, wastes tokens. Drop it.
+
+**Skill bypass after file familiarity:**
+Claude can read files during one task, then later answer a skill-matched request from that retained context without actually loading the matching skill. This is especially dangerous for code review: the model mistakes prior familiarity for sufficient compliance and produces plausible review output inline. Treat this as a protocol failure. If the request matches a skill, load the skill file anyway. Prior file familiarity increases the need for fresh-context review, not the permission to skip it.
 
 ## Long-session degradation
 

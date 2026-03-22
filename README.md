@@ -1,238 +1,249 @@
 # AI RPI Protocol
 
-> A structured approach to AI assisted coding
+> Make AI coding assistants instantly more reliable
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-green.svg)](./CHANGELOG.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-## TL;DR
+AI-RPI is a portable, repo-native workflow for coding agents.
 
-Make AI code suggestions more reliable and less error prone in your IDE in 1 minute. This framework is a bunch of instructions finely tested and cured fed from hundreds of real engineering coding sessions, to make your AI coding assistant much smarter and assertive. In practice, this means some more tokens consumed but it pays off with *fewer wrong implementations, fewer rewrites, and better decisions earlier*. With you still in control. Benefits:
-- AI doesn’t jump to code without understanding context
-- Identifies assumptions, potential risks, and alternatives early
-- Reduces rework and token waste, because correctness > speed
-- Integrates with common IDEs and flows (Cursor, VS Code, Claude, etc)
+You drop it into a repository, wire the entry surface your agent already reads, and the agent starts working with a stronger operating model: research before coding, challenge weak assumptions, adapt rigor to risk, validate before claiming done, and package results for the next human.
 
-## Quick install
+The goal is practical: fewer blind edits, fewer confident mistakes, cleaner reviews, and less rework.
 
-1. Download or clone this repo into your project into `/ai-rpi-protocol`
-2. Copy the entry point to your project root:
+Works across modern coding-agent workflows, including Codex, Claude Code, GitHub Copilot agents, Cursor, and similar repo-native environments.
+
+## Why Teams Need This
+
+Most AI coding failures are not syntax failures. They are reliability failures.
+
+The agent moves too fast, assumes too much, agrees too easily, misses repo constraints, and produces plausible code before anyone has checked whether the framing was right. That is why small asks turn into rewrites, PR reviews turn into archaeology, and "fast" AI work burns tokens on repair loops instead of progress.
+
+AI-RPI exists to make that behavior more reliable without turning everyday work into ceremony.
+
+## What You Get
+
+- **Research before code** so the agent looks at the repo before it starts freelancing
+- **Challenge instead of yes-machine behavior** so weak ideas and missing constraints surface earlier
+- **Adaptive rigor** so small fixes stay light and risky work gets more scrutiny
+- **Validation before "done"** so passing prose is not mistaken for proof
+- **Reviewable handoffs** so humans can quickly inspect what changed, what was verified, and what still needs attention
+
+## Before And After
+
+Without AI-RPI:
+
+- ask for a PR review and get vague praise plus scattered nitpicks
+- ask for a bug fix and get a cleanup campaign with weak grounding
+- ask for a feature and get implementation before trade-offs are visible
+
+With AI-RPI:
+
+- the agent starts from Research and cites repo evidence
+- the plan exposes trade-offs before implementation hardens
+- validation and reviewer focus are part of the output, not an afterthought
+
+## Proof Asset
+
+If you want a concrete public comparison instead of abstract claims, start with the PR review benchmark:
+
+- [Reliability Benchmark: PR Review](./docs/reliability-benchmark-pr-review.md)
+
+It shows the output shape AI-RPI is trying to improve: less vague approval, more evidence, clearer reviewer focus.
+
+## What It Is
+
+AI-RPI is not trying to replace your model, IDE, CI, or engineering judgment. It gives those tools a clearer contract inside real repos.
+
+## Try It In 60 Seconds
+
+1. Add this repo to your project as `/ai-rpi-protocol`
+2. Wire the root entry point your environment already respects:
    - **Most IDEs** (Cursor, VS Code, Windsurf, Zed): `cp /ai-rpi-protocol/AGENTS.md ./AGENTS.md`
    - **Claude Code** (CLI or VS Code extension): `cp /ai-rpi-protocol/CLAUDE.md ./CLAUDE.md`
-3. You keep prompting as usual. Under the hood, your AI assistant will now perform much better.
+3. Keep working in your normal environment
 
-_**NOTE**: follow new releases and update it once a while._
+That is the quick profile. For bootstrap, health checks, upgrades, and team-oriented install methods, see [core/system/setup-lifecycle.md](./core/system/setup-lifecycle.md).
 
-## What AI RPI Protocol is
+## Why It Converts Better Than Prompt Tweaks
 
-I spend quite a lot time stressing LLMs and AI coding assistants across engineering teams, building integrations and studying how they actually behave when you throw real pressure and real engineering problems on them. And what I found is not great.
+Prompts help, but they reset too much work every session.
 
-RLHF training [literally reward the model for agreeing with you](https://aclanthology.org/2025.findings-emnlp.121.pdf), so it learn to say yes instead of what's correct. Anchoring bias make it lock into its first idea and dress up the rest as filler, so you think you're choosing but you're really just confirming. Hallucination make it reference APIs and methods that don't even exist, with the same confidence it cite real ones. An eager beaver reflex skip the thinking that would have caught the bad assumption before it became 200 lines of wrong code. Context drift in long sessions cause it to quietly forget its own instructions and start improvising. Even things like temperature, decoding strategies, and system prompt positioning affect instruction adherence in ways most engineers never think about. And
-these aren't edge cases, this is how every AI coding assistant behave. You just don't always notice because the output look correct and the model never tell you when it's guessing.
+AI-RPI puts the workflow in the repo itself, so the discipline is portable, reviewable, and repeatable across sessions, people, and tools.
 
-This framework is what came out of that: drop some markdown files in your repo and your AI coding assistant goes from _"sure, here's 200 lines of JWT"_ to _"wait, what kind of auth do you actually need?"_
+## Use It When
 
-No new tools. No plugins. No config. Just markdown files, tuned from hundreds of real engineering sessions, telling what to enforce, what to skip, where AI needs a hard stop and where it just need a nudge. Every rule here exist because the opposite failed first.
+These are the five adoption scenarios AI-RPI is optimized to make clearer and safer:
 
-You keep prompting as usual. Under the hood, your AI assistant will now:
+1. **Understand a codebase or checkout flow**
+   Ask the agent to trace a real flow. AI-RPI pushes it to inspect the repo first, map the path, cite evidence, and separate verified behavior from guesses.
+2. **Review a colleague's PR**
+   AI-RPI packages findings, confidence gaps, validation evidence, and reviewer focus instead of dumping an unstructured summary.
+3. **Fix a small bug without over-ceremony**
+   Narrow patches can stay narrow. The protocol still forces enough grounding to avoid the classic "tiny fix, surprising regression" pattern.
+4. **Shape and implement a feature safely**
+   The agent can explore options, surface trade-offs, and only then move into implementation with a reviewable execution path.
+5. **Build a startup POC with discipline**
+   You can move fast without fully dropping rigor: lighter artifacts, pragmatic defaults, and clearer founder, engineer, and stakeholder handoffs.
 
-- **Researche first** — explores your codebase and surfaces what's actually true before proposing anything
-- **Challenge weak ideas** — pushes back on vague requirements, hidden assumptions, and risky shortcuts instead of just agreeing. Won't just say yes because you sound confident
-- **Show you real options** — presents genuinely different approaches with real trade-offs, not one good idea dressed up as three. Anti-anchoring rules make sure every option is actually worth picking
-- **Display evidences** — references specific files and lines from your codebase, not vibes. If it can't prove something exist, it tell you instead of making it up
-- **Calibrate confidence** — distinguishes what it verified from what it's guessing. You always know what to trust and what to double-check
-- **Resists the urge to rush** — the eager-beaver reflex is real: the model is trained to help immediately, which usually mean skipping the thinking. This framework override that reflex
-- **Enforces engineering best practices** — it will warn you if you try to store passwords in plain text, concatenate SQL strings, commit API keys to git, swallow exceptions silently, or skip tests on critical paths. It flag them before the code is even written. [Fully customizable](./core/rules/engineering-best-practices.md)
-- **Stay transparent** — when the protocol influence a decision, the AI tell you what it did and why. No invisible guardrails
+## What Changes After Install
 
-Think of it as an exoskeleton, not an autopilot: it reduce the cognitive load (search, recall, comparison) and expand visibility (assumptions, risks, trade offs) but decisions and accountability stays with you, the engineer.
+Under the hood, your coding agent will now:
 
-In practice, this means *fewer wrong implementations, fewer rewrites, and better decisions earlier*. With you still in control.
+- **Start from Research** instead of guessing from the prompt alone
+- **Challenge weak ideas** instead of acting like a yes-machine
+- **Show real options** instead of fake alternatives around one preferred answer
+- **Display evidence** with file paths and grounded repo context
+- **Calibrate confidence** so verified facts and guesses do not sound the same
+- **Adapt by mode and depth** so patches stay lean and risky work gets more scrutiny
+- **Use deterministic guardrails** when the surface is risky enough that prose guidance is not sufficient
+- **Package outcomes for humans** so engineers, reviewers, tech leads, PM-founders, and stakeholders get different kinds of summaries when they should
 
-## _"But doesn't this use more tokens?"_
+The point is practical: make AI coding assistants more reliable in the place that matters, your repo.
 
-Yes. A bit more upfront. The assistant will research before coding, ask questions before assuming, and present options before writing code. That cost tokens.
+## Mini Case Studies
 
-But here's what I've seen over and over: the real token burn is not in thinking, but in rework. A wrong implementation that need to be debugged, reverted, replanned, rebuilt from scratch cost way more than spending a few extra tokens getting it right the first time.
+These are representative patterns from real coding-agent work, not vanity metrics.
 
-Most of the token waste I see in AI assisted coding come from solving the wrong problem fast. The assistant jumps to code, the engineer accept because it looks right, and three rounds later they're still fixing the same thing. That's expensive, in tokens, in time, and in trust.
+### 1. Checkout-flow understanding
 
-This framework front loads the thinking (without outsourcing it) so you spend tokens on correctness instead of on rework. In practice, it tend to break even or save tokens on anything non trivial, because you stop going in circles.
+Without a protocol, "explain checkout" often becomes a shallow summary or a confident guess based on naming. With AI-RPI, the better outcome is a traced path: entry point, state transitions, pricing logic, failure paths, and explicit unknowns. That changes the follow-up conversation from "is this probably right?" to "which branch of the flow do we want to change?"
 
-## More about problems this framework expect to solve
+### 2. PR review that is actually reviewable
 
-AI coding assistants tend to:
+Unstructured AI review usually mixes nitpicks, speculation, and shallow praise. AI-RPI pushes review toward findings, evidence, confidence, and reviewer focus. The useful output is not "looks good overall". It is "here are the real risks, here is what was validated, and here is where a human reviewer should spend attention first."
 
-- **Jump-to-code behavior** - ask "how do I handle auth?" and get 200 lines of JWT before anyone asks what kind of auth you need
-- **Yes-machine responses** - "_store passwords in localStorage_" >> "_great idea, here's how_". [Research shows](https://aclanthology.org/2025.findings-emnlp.121.pdf) RLHF amplifies sycophancy
-- **Confident wrongness** - "_this regex handles all email formats_" (**no it doesn't**), "_this is thread-safe_" (**no it isn't**), "_this regex can parse HTML_" ([you can't parse HTML with regex!](https://stackoverflow.com/a/1732454))
-- **Vibe coding** - code that looks right but doesn't handle edge cases, follow patterns, or consider scale
-- **Scope creep disguised as help** - ask to fix a button and get a full component refactor you didn't ask for, with new abstractions and renamed files
-- **Copy-paste architecture** - AI grabs a pattern from Stack Overflow or its training data and drops it in, ignoring that your codebase already has conventions for that exact thing
-- **Silent assumption filling** - you leave a detail ambiguous and instead of asking, AI picks the worst default and builds on top of it
-- **Amnesia across turns** - AI forgets what it just researched two messages ago and starts contradicting its own findings - context handling
-- **Hallucinated confidence** - "_the API supports batch mode_" (**it doesn't**), "_this library handles that natively_" (**there's no such method**), "_this is the recommended approach_" (**recommended by whom?**)
-- **Zero trade-off answers** - every suggestion sounds perfect with no downsides mentioned. No complexity cost, no performance impact, no maintenance burden - just "_here's the solution_"
+### 3. Small bug fix without a mini rewrite
 
-## What this is NOT
+Agents often over-help. A small bug becomes a refactor because the model sees an opportunity to redesign. AI-RPI keeps bounded work bounded by default, but still forces enough repo grounding to avoid blind edits. That is the difference between a two-line fix and an unnecessary cleanup campaign.
 
-- **Not a new tool to learn** - it's markdown files that live in your repo
-- **Not rigid** - escape commands let you bypass it anytime (`ignore framework`, `just do it`)
-- **Not a replacement for your IDE** - it works alongside VS Code, Cursor, Claude Code, Zed, Windsurf, and others
-- **Not a guarantee** - this protocol relies on AI voluntarily following instructions. LLMs can and will ignore parts of it, specially in long conversations or with certain model/IDE combinations. It improves behavior, it doesn't control it
+### 4. Feature shaping before implementation drift
 
-## Installation
+Feature work breaks when the agent starts coding before the trade-offs are visible. AI-RPI makes the agent clarify the scope, compare real approaches, and line up validation expectations before implementation hardens. That usually avoids the "technically correct, product-wrong" result.
 
-### Quick install
+### 5. Startup POC with cleaner founder handoffs
 
-1. Download or clone this repo into your project into `/ai-rpi-protocol`
-2. Copy the entry point to your project root:
-   - **Most IDEs** (Cursor, VS Code, Windsurf, Zed): `cp /ai-rpi-protocol/AGENTS.md ./AGENTS.md`
-   - **Claude Code** (CLI or VS Code extension): `cp /ai-rpi-protocol/CLAUDE.md ./CLAUDE.md`
-3. Start coding - the AI should follow the RPI workflow automatically
+Startup teams often want speed and just enough rigor to stay sane. AI-RPI fits that mode well: lighter planning, stronger implementation discipline, and clearer packaging for founder updates, merge-readiness, and next-step ownership.
 
-Lite mode is the default. See [Modes](#operation-modes) for configuration.
+## Why AI-RPI Instead Of...
 
-### Install using `git subtree` (recommended for teams, to get updates faster)
+### Better prompts
 
-```
-git subtree add --prefix=ai-rpi-protocol https://github.com/MiguelAxcar/ai-rpi-protocol.git main --squash
-```
+Prompts are useful, but they reset too much work every time. AI-RPI encodes the workflow in the repo so the discipline survives across sessions, people, and tools.
 
-Update later:
+### A prompt pack or instruction file only
 
-```
-git subtree pull --prefix=ai-rpi-protocol https://github.com/MiguelAxcar/ai-rpi-protocol.git main --squash
-```
+Prompt packs help with wording. AI-RPI is broader: phase discipline, adaptive depth, validation model, guardrails, role-aware packaging, adapters, and memory handling.
 
-### Install using `git submodule`
+### One vendor's agent workflow
 
-```
-git submodule add https://github.com/MiguelAxcar/ai-rpi-protocol.git ai-rpi-protocol
-```
+Vendor-native workflows can be strong, but they are still vendor-native. AI-RPI is built to travel across repo-native surfaces without rewriting the whole operating model per IDE or model.
 
-Then copy the entry point to your project root (see step 2 above).
+### Freeform vibe coding
 
-## How it works
+Freeform prompting is great at feeling fast. It is much worse at staying grounded, reviewable, and transferable. AI-RPI is for teams that want AI help without betting quality on whoever typed the best prompt that day.
 
-**Research >> Plan >> Implement** with approval gates at each step.
+### Heavy process
 
-```
-Phase 1: RESEARCH
-├── AI explores, you review
-├── Evidence-based findings (file:line refs)
-└── Checkpoint: "Does this match? [yes/no]"
+This is not trying to turn every task into a PRD. The protocol is adaptive on purpose. Small tasks can stay light. Heavier artifacts and stricter controls are there when the work actually needs them.
 
-        (then)
+## What This Repo Gives You
 
-Phase 2: PLANNING
-├── AI proposes 2-3 approaches with trade-offs
-├── You choose the best path
-└── Checkpoint: "Ready to implement? [yes/no]"
+- A canonical human-readable contract for how coding agents should behave
+- Thin adapters for repo-native entry surfaces such as `AGENTS.md` and `CLAUDE.md`
+- Adaptive `Research -> Plan -> Implement` behavior with proportional depth
+- Deterministic guardrails for risky and critical surfaces
+- Persistent project context and project-scoped preferences
+- Role-based collaboration for better handoffs and approval targeting
+- Reviewable delivery patterns instead of raw chat transcripts
 
-         (then)
+## Launch And Adoption Assets
 
-Phase 3: IMPLEMENTATION
-├── AI follows approved plan exactly
-└── Output: working code + tests
-```
+If you want the repo positioned for sharing, see [docs/launch-kit.md](./docs/launch-kit.md). It includes repo description candidates, suggested tags, launch post drafts, an article outline, and a visual asset plan.
 
-### Lite mode vs Full mode
+## What This Is Not
 
-Two loading modes, configured in your project root `AGENTS.md`:
+- **Not just another prompt pack** - it is built for disciplined coding-agent workflows, not prompt-only tactics
+- **Not a sidecar chatbot workflow** - it plugs into the repo-native agent entry points and conventions your environment already uses
+- **Not rigid** - it can stay light on small work and get stricter only when the risk justifies it
+- **Not tied to one vendor** - the same harness can travel across Claude Code, Copilot, Cursor, Codex-style setups, and AGENTS-compatible environments
+- **Not a model, IDE, or CI replacement** - it works with your existing model, editor, tests, review, and delivery systems
+- **Not only for synchronous chat-driven work** - it also fits delegated agents, background workflows, and longer autonomous delivery loops
+- **Not a replacement for engineering judgment** - it exists to encode discipline around agent behavior, not to take decisions away from engineers
+- **Not a guarantee** - current coding agents can still ignore instructions, specially in long conversations or on weaker tool surfaces. AI-RPI improves behavior; it does not magically control it
 
-- **Lite** (default) - loads phases, philosophy, self-check, and adapters. Everything else on-demand via file index
-- **Full** - loads all rules, templates, memory, and compliance checks upfront
+## _"But Doesn't This Use More Tokens?"_
 
-Change `mode: lite` to `mode: full` in your `AGENTS.md` to switch.
+Usually a bit more up front.
 
-## Design decisions
+But the real waste in agent work is rework: wrong implementation, shallow review, missing constraints, or three repair loops after a fast bad start. AI-RPI spends tokens earlier so you spend fewer tokens digging out of avoidable mistakes later.
 
-| Decision | Rationale |
-|----------|-----------|
-| Research before coding | Understanding prevents wrong solutions |
-| Options, not conclusions | There are no final solutions, only trade-offs; decisions belong to the engineer |
-| Positive friction in decisions | Challenge weak requirements and hidden assumptions to help the engineer see further |
-| Friction belongs in the system | Cognitive friction at decisions, trade-offs, side-effects, long-term approaches |
-| Humans approve before AI implements | The engineer is accountable for what ships |
-| Evidence over summaries | File paths and line numbers, not vague descriptions |
+## Problems It Is Designed To Reduce
 
-## Not sure if it's working?
+Coding agents tend to:
 
-Check the [compliance checklist](./core/rules/compliance-checklist.md) - observable green/red flags with recovery actions.
+- **Jump to code** before the repo reality is clear
+- **Act like yes-machines** when the idea is risky or underspecified
+- **Produce confident wrongness** with clean prose and weak evidence
+- **Over-help** by expanding scope or refactoring unasked-for areas
+- **Drop into vibe coding** where code looks plausible but does not fit the system
+- **Forget context across turns** and start contradicting earlier findings
+- **Hide trade-offs** behind a single overconfident answer
 
-## Features
+## Install Beyond The Quick Start
 
-### Governance
-- **RPI phases** - Research >> Plan >> Implement with explicit gates between each phase
-- **Hard gates** - no phase advancement without explicit user confirmation
-- **Positive friction** - challenges weak requirements and hidden assumptions, surfaces trade-offs, downstream impact, maintenance cost, and alternatives
-- **Anti-sycophancy** - push back on risky approaches, present risks and side effects
-- **Think-first** - structured reasoning before code. Resists the urge to help immediately
-- **Anti eager-beaver** - treats the impulse to act fast as a trigger to stop and follow instructions. The model is trained to help immediately; this rule override that reflex
-- **Evidence-based** - file paths and line numbers, not vague references. Assumptions marked explicitly
-- **Transparency** - when the protocol influence a decision, the AI tell you what happened and why. Visible guardrails build trust
-- **Engineering best practices** - enforces OWASP Top 10, SOLID, ACID, proper error handling, and other well-known standards by default. The AI suggest, you decide. Fully customizable — add or remove what make sense for your project
-- **Anti-hallucination** - verifies references before citing them. If the AI can't prove it exist, it say so instead of making things up
-- **Confidence calibration** - distinguishes verified facts from guesses. The engineer always know what to trust and what to double-check
-- **Anti-anchoring** - prevents fake options. Every alternative must be genuinely viable, not a straw man to make the first idea look good
+If you want a cleaner long-term setup, AI-RPI supports three adoption levels:
 
-### Operation modes
-- **Lite** (default) - loads phases, philosophy, self-check, and adapters. Everything else on-demand via file index
-- **Full** - loads all rules, templates, memory, and compliance checks upfront
-- **Operation levels** - Quick, Streamlined, Thoughtful, Comprehensive. Auto-detected, user-adjustable
-- **Escape commands** - `skip`, `quick`, `just do it`, `ignore framework`
+- **quick** — try it fast with the protocol folder and one root entry point
+- **standard** — add durable project context with `memory.md` and `user-preferences.md`
+- **advanced-team** — use subtree or submodule workflows for repeatable upgrades and shared ownership
 
-### Memory and context
-- **Session memory** - `decisions.md`, `research-cache.md`, `plans/` persist across phases
-- **Silent memory handling** - manages memory behind the scenes, reconstructs if missed
-- **Context attention** - load only what you need, never load the same file twice
-- **Topic drift handling** - detect conversation drift, offers clean handoff
-- **Token discipline** - spend tokens on correctness, not narration. Artifacts in memory, lean summaries in chat
+The full install, upgrade, and ownership guidance lives in [core/system/setup-lifecycle.md](./core/system/setup-lifecycle.md).
 
-### Adapters
-- **IDE** - VS Code, Cursor, Claude Code, Zed, Windsurf
-- **Model** - Claude, GPT, Gemini, Grok, DeepSeek, local models
-- **Profiles** - casual-pair, architect, consultant, researcher, mentor, teacher, optimizer, debugger
+## How It Works At A Glance
 
-### Compliance
-- **Self-check** - violation check before every output
-- **Compliance checklist** - observable green/red flags with recovery actions. See [`compliance-checklist.md`](./core/rules/compliance-checklist.md)
-- **Recovery commands** - `"stop - load ai-rpi-protocol"`, `"halt - you skipped the protocol"`
+The public spine is still `Research -> Plan -> Implement`, but the runtime adapts to the task instead of forcing every request through the same amount of ceremony.
 
-## Project info
+The strongest differentiators are:
 
-A set of markdown files that captures stable truths about your project (domain terms, constraints, structure, coding patterns). Generated once, committed to the repo, reused across tasks.
+- **Repo-native discipline** — the operating model lives in files the agent already reads
+- **Adaptive RPI spine** — one public flow, lighter or heavier depending on the work
+- **Progressive loading** — load only the context the task proves it needs
+- **Deterministic guardrails** — stronger control on risky surfaces without making simple work bureaucratic
+- **Persistent project context** — stable project memory and preferences survive sessions and upgrades
+- **Validation plus reviewer focus** — prove the result and tell the next reviewer where attention matters most
+- **Role-based packaging** — package outcomes differently for engineers, reviewers, tech leads, PM-founders, and stakeholders
 
-**Location:** `/ai-rpi-protocol_project-info/` (outside the framework folder so updates don't overwrite your context)
+If you want the deeper system docs, start here:
 
-**Generate:** Ask your assistant `Generate my project info`. It creates: `overview.md`, `constraints.md`, `structure.md`, `stack-patterns.md`, `glossary.md`, `standards.md`. Optional: `integrations.md`, `monitoring.md`.
+- [core/system/progressive-loading.md](./core/system/progressive-loading.md)
+- [core/system/deterministic-guardrails.md](./core/system/deterministic-guardrails.md)
+- [core/system/persistent-project-context.md](./core/system/persistent-project-context.md)
+- [core/system/validation-model.md](./core/system/validation-model.md)
+- [core/system/role-based-collaboration.md](./core/system/role-based-collaboration.md)
+- [core/system/setup-lifecycle.md](./core/system/setup-lifecycle.md)
 
-## Known limitations
+## Project Context
 
-This protocol relies on AI voluntarily following markdown instructions. LLMs are not deterministic rule-followers - they can and will ignore, partially follow, or silently drop instructions, specially in long conversations or when the model's training biases push toward different behavior.
+AI-RPI can bootstrap durable project context under `/ai-rpi-protocol_project-info/`, especially `memory.md` and `user-preferences.md`, so stable project knowledge survives across sessions and upgrades instead of living in chat history.
 
-**Common reasons for non-compliance:**
-- Trained to be "helpful" (immediate action feels helpful to the model)
-- Some IDEs/models don't fully read custom instruction files
-- Long conversations cause context drift
-- Some models sometimes actively reject behavioral instructions
+## Known Limitations
 
-**Recovery commands:**
-```
-"stop - load ai-rpi-protocol"
-"wait - follow AGENTS.md"
-"halt - you skipped the protocol"
-```
+This harness still relies on current coding agents actually honoring repo instructions, skills, and adapter rules. LLMs are not deterministic rule-followers: they can ignore, partially follow, or silently drop instructions, especially in long conversations or on weaker tool surfaces.
 
-**User override:** `"ignore framework"` and the AI will comply. The framework is a tool, not a cage.
+Common reasons:
 
-**Best results so far:** Cursor + Anthropic models.
+- models are rewarded for sounding helpful before they are grounded
+- some IDEs or models do not fully load repo instruction surfaces
+- long conversations create context drift
+- some model and tool combinations simply comply less reliably than others
+
+If an agent drifts, reload the repo entry surface or restart the session. For observable red flags and recovery guidance, see [core/rules/compliance-checklist.md](./core/rules/compliance-checklist.md).
 
 ## Contributing
 
-Early project. Works for my workflows, needs testing across more IDEs and models.
+Early project. It works well in the workflows I stress it with, but it still needs broader testing across IDEs, models, and coding-agent environments.
 
 Where contributions help most:
 - **Adapter coverage** - IDEs, models, edge cases. Even a one-line fix helps
@@ -248,5 +259,3 @@ Also an open question from [Jake Nations](https://youtu.be/eIoohUmYpGI): "Will w
 ## License
 
 MIT - [LICENSE](./LICENSE)
-
-v1.0.0 - [CHANGELOG](./CHANGELOG.md)

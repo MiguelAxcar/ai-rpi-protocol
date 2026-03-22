@@ -1,204 +1,152 @@
 purpose: classify user requests; output: which template to use; use when: unclear request type.
 
-# Request Types Reference
+# Mode Reference
 
-**Purpose:** Reference guide for classifying user requests. Helps determine which template to use.
-
----
-
-## 🎯 Feature Requests
-
-**Keywords:** "add", "implement", "create", "build", "new feature", "I want", "need", "should have"
-
-**Examples:**
-- "Add PayPal support on checkout"
-- "I want to implement user authentication"
-- "Create a new API endpoint for orders"
-- "Build a dashboard for analytics"
-- "We need email notifications"
-- "Should have dark mode toggle"
-
-**Template:** `restate-feature-request.md`
+**Purpose:** Reference guide for classifying user requests into the public AI-RPI Modes. The protocol stays RPI-first while the adaptive layer stays practical and low-noise.
 
 ---
 
-## 🐛 Bugfix Requests
+## Explore
 
-**Keywords:** "fix", "bug", "error", "broken", "not working", "issue", "problem", "fails", "crash"
+Use for questions, tracing, evidence gathering, understanding, and feasibility checks.
 
-**Examples:**
-- "Fix the payment button not working"
-- "There's a bug in the checkout flow"
-- "Error when submitting form"
-- "This is broken, help me fix it"
-- "Login not working"
-- "The API returns 500 error"
-- "App crashes on iOS"
+Examples:
+- "Explain how the payment flow works"
+- "Trace where this value comes from"
+- "Can this repo support multi-tenant auth?"
+- "Find out why this is slow"
 
-**Template:** `restate-bugfix-request.md`
+Internal notes:
+- `Diagnose` is an internal subtype of Explore
+- Explore can internally branch into explain, trace, diagnose, gather evidence, or feasibility check
+
+Template routing:
+- Usually `restate-other-request.md`
+- May skip restate for narrow informational asks
 
 ---
 
-## 🔍 Code Review Requests
+## Discuss
 
-**Keywords:** "review", "check", "audit", "quality", "feedback", "look at", "examine"
+Use for shaping direction before execution.
 
-**Examples:**
+Examples:
+- "How should we structure this feature?"
+- "What are the trade-offs between these two approaches?"
+- "Challenge this design before we build it"
+
+Template routing:
+- Usually `restate-other-request.md`
+
+---
+
+## Review
+
+Use for audits, code review, validation, and correctness checks.
+
+Examples:
 - "Review this PR for security issues"
 - "Check if this code follows our patterns"
-- "Audit this service for code quality"
-- "Give me feedback on this implementation"
-- "Look at this code, any issues?"
-- "Examine this for performance problems"
+- "Audit this service for quality risks"
 
-**Template:** `restate-code-review-request.md`
-**Output template:** `code-review-output-template.md` (used during Planning — per-issue options and advice)
+Template routing:
+- `/ai-rpi-protocol/skills/code-review.md` for standalone review requests
+- `/ai-rpi-protocol/templates/restate-code-review-request.md` only when the review target or scope is ambiguous
+- `/ai-rpi-protocol/templates/code-review-output-template.md` for per-issue review guidance during planning
 
----
-
-## 🔧 Refactoring Requests
-
-**Keywords:** "refactor", "improve", "clean up", "restructure", "reorganize", "simplify"
-
-**Examples:**
-- "Refactor this service to follow SOLID"
-- "Improve the code structure"
-- "Clean up this messy function"
-- "Restructure the components"
-- "Simplify this logic"
-- "Reorganize the file structure"
-
-**Template:** `restate-other-request.md` (Refactoring type)
+Rule:
+- explicit review requests should not be downgraded into a small verification pass
 
 ---
 
-## 📚 Explanation Requests
+## Patch
 
-**Keywords:** "explain", "how does", "why", "understand", "what does", "tell me about", "walk me through"
+Use for targeted, bounded changes.
 
-**Examples:**
-- "Explain how the payment flow works"
-- "How does authentication work here?"
-- "Why is this code structured this way?"
-- "Help me understand this function"
-- "What does this service do?"
-- "Tell me about the architecture"
-- "Walk me through the checkout process"
+Examples:
+- "Fix the payment button not working"
+- "Patch this bug without changing the architecture"
+- "Clean up this narrow issue"
+- "Patch a narrow UI label or validation issue"
+- "Fix a small test regression"
 
-**Template:** `restate-other-request.md` (Explanation type)
+Template routing:
+- `restate-bugfix-request.md` for bug-driven patches
+- `restate-other-request.md` for cleanup or refactor-style patches
+- May skip restate for trivial local fixes
 
----
-
-## ⚡ Optimization Requests
-
-**Keywords:** "optimize", "performance", "faster", "slow", "bottleneck", "improve speed", "reduce cost"
-
-**Examples:**
-- "Optimize this query, it's too slow"
-- "Improve performance of this endpoint"
-- "Make this faster"
-- "Find the bottleneck in this code"
-- "Reduce database queries"
-- "Optimize memory usage"
-
-**Template:** `restate-other-request.md` (Optimization type)
+Usually lands here:
+- label change
+- copy tweak
+- narrow validation tweak
+- tiny config change
+- small test fix
+- bounded UI tweak
 
 ---
 
-## 🧪 Testing Requests
+## Feature
 
-**Keywords:** "test", "coverage", "unit test", "integration test", "add tests", "test this"
+Use for new capabilities with clear user-facing or workflow-facing intent.
 
-**Examples:**
-- "Add unit tests for this service"
-- "Improve test coverage"
-- "Write tests for this function"
-- "Fix flaky tests"
-- "Test the payment flow"
-- "Add integration tests"
+Examples:
+- "Add PayPal support on checkout"
+- "Build a dashboard for analytics"
+- "We need email notifications"
+- "Add a new permission flow"
+- "Create a new endpoint"
 
-**Template:** `restate-other-request.md` (Testing type)
+Template routing:
+- `restate-feature-request.md`
 
----
-
-## 📖 Documentation Requests
-
-**Keywords:** "document", "documentation", "README", "comment", "docs", "write docs"
-
-**Examples:**
-- "Document this API"
-- "Add comments to this code"
-- "Update the README"
-- "Write documentation for this service"
-- "Create a guide for this feature"
-
-**Template:** `restate-other-request.md` (Documentation type)
+Usually lands here:
+- meaningful capability addition
+- meaningful behavior expansion
+- new flow
+- new permission behavior
+- new endpoint
+- new background work
+- user-visible capability expansion
 
 ---
 
-## 🗑️ Cleanup Requests
+## Build
 
-**Keywords:** "remove", "delete", "clean up", "dead code", "unused", "deprecated", "tech debt"
+Use for larger implementation work, technical delivery, migrations, integration work, or multi-step execution.
 
-**Examples:**
-- "Remove unused imports"
-- "Delete dead code"
-- "Clean up deprecated functions"
-- "Remove tech debt"
-- "Delete unused dependencies"
+Examples:
+- "Migrate this service to TypeScript"
+- "Integrate this library across the pipeline"
+- "Build the new API layer"
 
-**Template:** `restate-other-request.md` (Cleanup type)
-
----
-
-## 🔄 Migration Requests
-
-**Keywords:** "migrate", "upgrade", "convert", "move", "port", "update version"
-
-**Examples:**
-- "Migrate from jQuery to vanilla JS"
-- "Upgrade React to version 18"
-- "Convert this to TypeScript"
-- "Move this to a new service"
-- "Port this to Python"
-
-**Template:** `restate-other-request.md` (Migration type)
+Template routing:
+- `restate-feature-request.md` when the ask is outcome-driven
+- `restate-other-request.md` when the ask is technical delivery, migration, refactor, testing, or documentation heavy
 
 ---
 
-## 🎨 Design/Architecture Requests
+## Internal tags
 
-**Keywords:** "design", "architecture", "how should", "what's the best", "choose", "decide"
+These are useful internally, but they are not the public first-class Modes:
 
-**Examples:**
-- "Design a caching system"
-- "What's the best architecture for this?"
-- "How should I structure this feature?"
-- "Choose between these two approaches"
-- "Decide on the database schema"
+- bugfix
+- refactor
+- explanation
+- optimization
+- testing
+- documentation
+- cleanup
+- migration
+- architecture/design
 
-**Template:** `restate-other-request.md` (Design/Architecture type)
-
----
-
-## 🚀 Quick Tasks (Trivial)
-
-**Keywords:** "typo", "rename", "comment", "format", "indent", "syntax"
-
-**Examples:**
-- "Fix typo in variable name"
-- "Rename this function"
-- "Add a comment here"
-- "Format this code"
-- "Fix indentation"
-
-**Template:** Usually Quick mode, skip templates, execute directly
+Map them into Explore, Discuss, Review, Patch, Feature, or Build based on user intent.
 
 ---
 
-## Classification Tips
+## Classification tips
 
-1. **Multiple keywords:** Use the primary intent (what user wants to achieve)
-2. **Ambiguous:** Ask clarifying question: "Are you asking me to [interpretation 1] or [interpretation 2]?"
-3. **Combined requests:** Break into separate requests or use the most complex one
-4. **Context matters:** Same keywords can mean different things in different contexts
+1. Use the primary intent, not just the keywords.
+2. If the request is ambiguous, ask whether the user wants to explore, discuss, review, patch, define a feature, or build.
+3. Combined requests can move through multiple kinds over time. Example: Explore -> Discuss -> Patch.
+4. Not every request should travel equally far through RPI. Explore may stop after Research, while Feature and Build often continue.
+5. When two classifications are plausible, choose the simpler one first and escalate only with evidence.

@@ -36,6 +36,10 @@ Do: run the repo checks that matter, tests, lint, typecheck, build, then report 
 Anti pattern: optimize for speed by skipping gates
 Do: treat gates as non negotiable, if the user wants speed, switch operation level, not the protocol
 
+### Rule 9
+Anti pattern: after already reading files for another task, answer a later review request inline instead of activating the review skill
+Do: when the user asks for review, audit, or PR feedback, load `/ai-rpi-protocol/skills/code-review.md` and follow it. Prior file familiarity is not permission to bypass the fresh-context specialist workflow
+
 ## Specific features
 
 ### Repo aware context loading
@@ -53,3 +57,7 @@ Do: run the shortest reliable set of commands that validate correctness for this
 ### Session memory artifacts
 When: at each phase boundary
 Do: write the decisions and constraints into the framework memory files, then continue with only the confirmed state
+
+### Skill activation discipline
+When: a request clearly matches a skill, especially code review
+Do: load the skill file before producing substantive output. Claude Code should not emit review-shaped, test-plan-shaped, or other skill-shaped output from inline intuition alone

@@ -35,7 +35,7 @@ MANDATORY: Run before any decision or output.
    - Before phase transitions, are the relevant memory files updated?
 
 7. **User preferences honored?**
-   - Check `/ai-rpi-protocol/user-preferences/preferences.md` if it exists
+   - Check `/ai-rpi-protocol_project-info/user-preferences.md` if it exists
 
 ## If any check fails
 

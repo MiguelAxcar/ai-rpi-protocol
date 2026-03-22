@@ -40,4 +40,3 @@ After making a decision, append a new entry:
 ## Decisions
 
 <!-- Append new decisions below this line -->
-

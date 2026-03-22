@@ -38,7 +38,7 @@ Do: use agent mode to gather evidence, then merge into one consolidated findings
 When: the plan is approved and touches multiple files
 Do: apply edits in the planned order, keep batches small, and pause after each batch with a diff summary
 
-### Tab completions for Quick mode
+### Tab completions for minimal depth
 When: trivial edits, typos, renames, small comments
 Do: accept only the minimum necessary completion, then run a quick validation step
 

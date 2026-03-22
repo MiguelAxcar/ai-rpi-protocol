@@ -1,62 +1,90 @@
 # Measuring effectiveness
 
-This protocol claims to reduce rework, improve decisions, and catch problems earlier. This file explains how to measure that — automatically.
+This file describes AI-RPI's lightweight observability posture.
 
-## How it works
+The goal is not to log everything. The goal is to notice whether AI-RPI is helping or hurting, and improve deliberately without creating analytics theater.
 
-At the end of every completed task (Implementation phase done), the AI automatically appends a row to `/ai-rpi-protocol/memory/metrics-log.md`. No manual tracking needed.
+Canonical model:
+- See `/ai-rpi-protocol/core/system/evaluation-flywheel.md` for the full outcome-first evaluation architecture.
 
-The log accumulates over time. Say **"show metrics"** to get a summary of patterns, trends, and adjustment recommendations.
+## What matters most
 
-## What gets tracked
+Primary success:
+- the user's goal was fulfilled
+- quality was high enough for the task
+- unnecessary friction stayed low
 
-| Metric | What it measures | How the AI estimates it |
-|--------|-----------------|------------------------|
-| **Task** | What was done | One-line description |
-| **Mode** | Which mode was used | Quick / Streamlined / Thoughtful / Comprehensive |
-| **Gate adjustments** | How many times the user said "no" or "adjust" at a gate | Count of non-pass gates |
-| **Escapes used** | How many times user bypassed the protocol | Count of escape commands |
-| **Catches** | What the protocol caught that would have been missed | Wrong assumptions, hallucinations flagged, risks surfaced |
-| **Tokens used** | Approximate tokens consumed in this task | Estimated from conversation length (messages × avg tokens) |
-| **Tokens saved (est.)** | Approximate tokens saved by avoiding rework | Estimated from catches — each caught issue ≈ 1-3 rework cycles avoided |
-| **Rework** | Did anything need to be redone? | Yes/no + what |
+Secondary quality questions:
+- did AI-RPI ask only relevant questions?
+- did it explain why it asked, confirmed, blocked, or escalated?
+- did it choose useful rigor, validation, and artifacts?
+- did the user have to correct the structure?
 
-### Token estimation method
+Task success matters more than internal neatness.
 
-**Tokens used:** The AI estimates based on the number of messages exchanged and the average length of responses. This is a rough estimate, not an exact count — most IDEs don't expose token usage to the AI.
+If Mode, Depth, or Persona were slightly imperfect but the outcome was strong and the interaction stayed efficient, that is usually acceptable.
 
-**Tokens saved:** For each "catch" (wrong assumption corrected during Research, risk surfaced during Planning, hallucination flagged before implementation), the AI estimates the rework that was avoided:
-- Minor catch (wrong file path, minor assumption): ~500-1k tokens saved
-- Medium catch (wrong approach, missing constraint): ~2k-5k tokens saved
-- Major catch (wrong architecture, security flaw, fundamental misunderstanding): ~5k-15k tokens saved
+## Lightweight metrics subset
 
-These are rough estimates based on typical rework patterns. The value is in the trend over time, not the precision of individual numbers.
+Prefer a small practical subset over heavy analytics.
 
-## The log file
+| Signal | What it helps detect |
+|--------|----------------------|
+| **Task outcome** | whether the user's goal was actually fulfilled |
+| **Outcome quality** | whether the result was correct, useful, and reviewable enough |
+| **User effort / noise** | whether the protocol created too much friction |
+| **Relevant questions only** | whether questioning stayed proportional |
+| **Explanation quality** | whether added friction was justified clearly enough |
+| **Corrections or overrides** | whether the user had to fight the structure |
+| **Validation / handoff quality** | whether the finish quality was strong enough |
+| **Should have been lighter or stricter** | whether AI-RPI misjudged the control level |
 
-Lives at `/ai-rpi-protocol/memory/metrics-log.md`. Format:
+Do not over-index on token estimates or internal classification purity.
+
+## Metrics log
+
+When implementation completes and a lightweight summary is useful, append a lean row to `/ai-rpi-protocol/memory/metrics-log.md`.
+
+Suggested format:
 
 ```markdown
-| Date | Task | Mode | Gates adj. | Escapes | Catches | Tokens used | Tokens saved (est.) | Rework | Notes |
-|------|------|------|-----------|---------|---------|-------------|--------------------| -------|-------|
-| 2025-06-15 | Add PayPal checkout | Thoughtful | 1 | 0 | 2 | ~8k | ~6k | No | Caught missing webhook handler + wrong API version |
-| 2025-06-15 | Fix typo in README | Quick | 0 | 1 | 0 | ~200 | 0 | No | Trivial, escaped appropriately |
+| Date | Task | Mode | Depth | Outcome | Noise | Corrections | Validation | Flex/Tighten | Notes |
+|------|------|------|-------|---------|-------|-------------|------------|--------------|-------|
+| 2026-03-14 | Add PayPal checkout | Feature | full | strong | reasonable | 1 | strong | held-firmer | Critical flow; good rigor paid off |
+| 2026-03-14 | Fix typo in README | Patch | minimal | strong | low | 0 | light | flex-more | Stayed lightweight as expected |
 ```
+
+Field guidance:
+- **Outcome** — weak / acceptable / strong
+- **Noise** — low / reasonable / high
+- **Corrections** — count of meaningful user corrections or structural overrides
+- **Validation** — light / adequate / strong / weak
+- **Flex/Tighten** — none / should-flex-more / should-hold-firmer / held-firmer
 
 ## Reading the metrics
 
-Say **"show metrics"** and the AI will:
-1. Read `metrics-log.md`
-2. Summarize: total tasks, average rework rate, total estimated tokens saved, most common catches
-3. Suggest adjustments if patterns emerge
+Say **"show metrics"** and AI-RPI should summarize trends such as:
+- outcome quality patterns
+- whether noise is trending too high
+- whether users often correct the structure
+- whether rigor is often too light or too heavy
+- whether a repeated failure mode deserves a lesson, benchmark case, or protocol update
 
 ## When to adjust
 
-| Pattern | What it means | What to do |
-|---------|--------------|------------|
-| Escape rate > 50% | Protocol too heavy for this project | Switch default to Quick or Streamlined |
-| Rework rate not improving | Research is too shallow | Check if AI is reading the codebase or guessing |
-| Gate adjustment rate > 40% | Options quality is low | Improve project-info files or switch to full mode |
-| Catches trending to 0 | Protocol is working well OR not catching things | Spot-check a few tasks manually |
-| Tokens saved consistently > tokens used overhead | Protocol is paying for itself | Keep current settings |
-| Tokens saved ≈ 0 across many tasks | Tasks may be too simple for full protocol | Use Quick mode more often |
+| Pattern | What it likely means | What to do |
+|---------|----------------------|------------|
+| strong outcomes with high noise | protocol quality is lagging task success | simplify questions, explanations, or artifact choices |
+| repeated user corrections | structural choices are missing the user's real need | review durable project memory and refine defaults |
+| recurring should-flex-more | over-ceremony | lighten default behavior for those cases |
+| recurring should-hold-firmer | under-ceremony | tighten rigor or guardrails for those cases |
+| weak explanation patterns | friction is under-justified | improve explanation quality before changing structure |
+| weak outcomes despite neat structure | internal purity is masking product failure | optimize for task success, not protocol aesthetics |
+
+## Anti-overengineering rules
+
+- do not measure everything
+- do not treat every internal mismatch as a failure
+- do not burn tokens doing self-analysis on every request
+- use trends and representative cases, not false precision
+- if a small metric system stops being useful, simplify it

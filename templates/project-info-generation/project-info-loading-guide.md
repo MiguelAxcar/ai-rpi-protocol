@@ -4,7 +4,23 @@ purpose: load project truths; output: what to load based on task; use when: befo
 
 ## When to Load Which Files
 
-Project-info files should be loaded **on demand** based on the current phase and task requirements.
+Project-info has two loading classes:
+- persistent project context that should load early on every interaction
+- remaining project-info files that should load on demand based on the phase and task requirements
+
+Treat persistent project context as early input:
+- `/ai-rpi-protocol_project-info/memory.md`
+- `/ai-rpi-protocol_project-info/user-preferences.md`
+
+Treat the rest of project-info as a selective later-layer expansion: load only the project truths the active phase actually needs.
+
+## Persistent Project Context
+
+Always load these early if they exist:
+- `/ai-rpi-protocol_project-info/memory.md` - Durable project memory
+- `/ai-rpi-protocol_project-info/user-preferences.md` - Durable project-scoped user preferences
+
+These files should shape behavior before Mode / Depth / Persona inference.
 
 ---
 
@@ -13,7 +29,6 @@ Project-info files should be loaded **on demand** based on the current phase and
 **Always Load (if exists):**
 - `/ai-rpi-protocol_project-info/overview.md` - Understand what the project is, domain, tech stack
 - `/ai-rpi-protocol_project-info/constraints.md` - Understand limitations and rules before researching
-- `/ai-rpi-protocol_project-info/custom-instructions.md` - User preferences and custom instructions (honor in all phases)
 
 **Load When Relevant:**
 - `/ai-rpi-protocol_project-info/structure.md` - When navigating codebase to find relevant files
@@ -26,7 +41,6 @@ Project-info files should be loaded **on demand** based on the current phase and
 **Always Load (if exists):**
 - `/ai-rpi-protocol_project-info/constraints.md` - Ensure plans respect non-negotiable rules
 - `/ai-rpi-protocol_project-info/stack-patterns.md` - Follow established patterns in plan
-- `/ai-rpi-protocol_project-info/custom-instructions.md` - User preferences and custom instructions
 
 **Load When Relevant:**
 - `/ai-rpi-protocol_project-info/standards.md` - When planning code structure or testing approach
@@ -40,7 +54,6 @@ Project-info files should be loaded **on demand** based on the current phase and
 - `/ai-rpi-protocol_project-info/constraints.md` - Enforce rules during implementation
 - `/ai-rpi-protocol_project-info/stack-patterns.md` - Follow patterns consistently
 - `/ai-rpi-protocol_project-info/standards.md` - Apply code style and conventions
-- `/ai-rpi-protocol_project-info/custom-instructions.md` - User preferences and custom instructions
 
 **Load When Relevant:**
 - `/ai-rpi-protocol_project-info/structure.md` - When creating new files/modules
@@ -51,10 +64,13 @@ Project-info files should be loaded **on demand** based on the current phase and
 ## Loading Strategy
 
 ### 1. Essential Files (Load Early)
+Load these before phase classification if they exist:
+- **All interactions:** memory.md, user-preferences.md
+
 Load these at the start of each phase if they exist:
-- **Phase R:** overview.md, constraints.md, custom-instructions.md
-- **Phase P:** constraints.md, stack-patterns.md, custom-instructions.md
-- **Phase I:** constraints.md, stack-patterns.md, standards.md, custom-instructions.md
+- **Phase R:** overview.md, constraints.md
+- **Phase P:** constraints.md, stack-patterns.md
+- **Phase I:** constraints.md, stack-patterns.md, standards.md
 
 ### 2. Context-Sensitive Files (Load as Needed)
 Load these only when the task requires them:
@@ -69,11 +85,15 @@ Don't load all files at once. Load them when:
 - The task scope expands to cover that area
 - User mentions something related to that file's domain
 
+If project-info starts to sprawl, condense what matters and continue from the condensed summary instead of bulk-loading the rest.
+
 ## File Purpose Quick Reference
 
 | File | Contains | When to Load |
 |------|----------|-------------|
 | `overview.md` | Project description, domain, tech stack | Phase R start |
+| `memory.md` | Durable project memory and learned project truths | Every interaction, before classification |
+| `user-preferences.md` | Durable project-scoped user preferences | Every interaction, before classification |
 | `constraints.md` | Non-negotiable rules, compliance | All phases (mandatory) |
 | `structure.md` | Architecture, directories, entry points | When navigating/creating files |
 | `stack-patterns.md` | Coding patterns, conventions | Phase P & I (mandatory) |
@@ -81,7 +101,6 @@ Don't load all files at once. Load them when:
 | `standards.md` | Code style, testing, git practices | Phase I (mandatory) |
 | `integrations.md` | External APIs, rate limits | When working with integrations |
 | `monitoring.md` | Logging, metrics, observability | When adding monitoring (optional) |
-| `custom-instructions.md` | User preferences, custom instructions | All phases (load when exists) |
 
 ## Token Conservation
 
@@ -90,6 +109,8 @@ Don't load all files at once. Load them when:
 **Good Example:**
 ```
 User: "Add email validation to signup"
+
+Always load early: memory.md, user-preferences.md
 
 Phase R: Load overview.md, constraints.md
 - Need to understand domain and any email rules

@@ -19,7 +19,7 @@ GPT models are particularly prone to agreeing with the user. The anti-sycophancy
 GPT models sometimes treat enthusiasm as approval. Be strict: only accept explicit confirmation words at gates. If the user says "sounds good, what about X?" — that's a follow-up question, not a gate confirmation.
 
 **Reasoning models (o1 family):**
-These models do internal reasoning before responding. They follow structured instructions differently — they may skip intermediate explanations. The RPI phases still apply, but the model may compress research/planning into fewer messages.
+These models do internal reasoning before responding. They follow structured instructions differently — they may skip intermediate explanations. The public RPI spine still applies, but the model may compress research/planning into fewer messages.
 
 **Context window awareness:**
 If using a variant with 8k-32k context, load fewer files upfront. Prioritize phases.md and the current phase file. Load other rules on demand.
