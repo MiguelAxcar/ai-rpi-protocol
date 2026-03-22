@@ -44,14 +44,6 @@ With AI-RPI:
 - the plan exposes trade-offs before implementation hardens
 - validation and reviewer focus are part of the output, not an afterthought
 
-## Proof Asset
-
-If you want a concrete public comparison instead of abstract claims, start with the PR review benchmark:
-
-- [Reliability Benchmark: PR Review](./docs/reliability-benchmark-pr-review.md)
-
-It shows the output shape AI-RPI is trying to improve: less vague approval, more evidence, clearer reviewer focus.
-
 ## What It Is
 
 AI-RPI is not trying to replace your model, IDE, CI, or engineering judgment. It gives those tools a clearer contract inside real repos.
