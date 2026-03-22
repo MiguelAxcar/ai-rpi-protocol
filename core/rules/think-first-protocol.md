@@ -42,8 +42,8 @@ These are always-active anchors. Every decision and every output should be consi
    - Verify problem framing before proposing a solution
    - If multiple interpretations exist, present them and ask which is correct
 
-3. **Follow the phases**
-   - Follow Research >> Plan >> Implement as defined by the framework
+3. **Follow the adaptive RPI spine**
+   - Follow Research -> Plan -> Implement as the public protocol spine, entering only the phases the task actually needs
    - Do not collapse phases unless the task is genuinely trivial (see phases.md for examples)
 
 4. **Add positive friction where it matters**

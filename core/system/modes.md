@@ -1,131 +1,150 @@
-purpose: define mode selection; output: mode choice (Quick/Thoughtful/Comprehensive); use when: start of request or re-assess.
+purpose: define adaptive runtime selection; output: mode choice + depth choice; use when: start of request or re-assess.
 
-# Modes
+# Mode and Depth
 
-Modes control how much friction, rigor, and artifact generation the assistant applies.
+This file keeps the legacy `modes.md` path, but it now defines the adaptive runtime layer around the public RPI spine.
+
+- **Mode** = what the user wants
+- **Depth** = how much ceremony is needed
 
 Goal:
-- Keep the default experience low friction.
-- Put rigor behind explicit user intent.
-- Prevent “bureaucracy by default” while keeping “accountability by default”.
+- Keep the default experience proportional.
+- Put rigor where the task actually needs it.
+- Avoid bureaucracy by default while keeping accountability by default.
+- Help engineers generate value and deliver results.
+- Be a thoughtful partner, not a passive pleaser.
 
-Modes are orthogonal to profiles.
-A profile changes voice and focus (debugger, architect, mentor).
-A mode changes process and depth (how many questions, how much evidence, how much planning).
+Mode and Depth are orthogonal to levels, personas, and human roles.
+- A **level** controls how much of the protocol is loaded.
+- A **persona** changes voice, emphasis, browsing behavior, and output defaults.
+- **Mode** changes what kind of outcome the user is asking for.
+- **Depth** changes how much evidence, challenge, planning, validation, and packaging the loop produces.
+- A **human role** changes which human viewpoint the work is being shaped for, the likely handoff target, and the approval boundary that matters next.
 
-## Mode selection
+Operational units are selected on top of this layer:
+- skills are reusable workflows
+- subagents are specialist delegated workers with fresh context
 
-The assistant MUST select a mode at the start of a request, using these signals:
+Role-based collaboration sits beside this runtime layer. It should influence packaging, explanation style, and handoff routing without changing the public RPI spine.
+
+Load `/ai-rpi-protocol/core/system/role-based-collaboration.md` when collaboration target, handoff routing, approval boundaries, or role-aware packaging materially matter.
+
+Mode strongly influences which skills and subagents are likely to help, but it should not blindly preload them.
+
+## Public modes
+
+Use these public modes:
+
+- **Explore** — explain, trace, gather evidence, understand, feasibility-check
+- **Discuss** — shape direction, challenge assumptions, compare trade-offs
+- **Review** — inspect correctness, quality, validation, and reviewer risk
+- **Patch** — make a targeted, bounded change
+- **Feature** — add or expand a meaningful capability
+- **Build** — carry larger execution work across multiple steps or systems
+
+Internal note:
+- `Diagnose` is an internal subtype of **Explore**
+- Do not make `Diagnose` a public first-class mode
+
+Patch vs Feature guidance:
+- Small asks such as label changes, copy tweaks, narrow validation tweaks, tiny config changes, small test fixes, and bounded UI tweaks usually land as **Patch**
+- Meaningful capability additions, new flows, new permission behavior, new endpoints, background work, and user-visible behavior expansion usually land as **Feature**
+
+## Depth selection
+
+The assistant MUST select mode and depth during Research/Inception using these signals:
 
 Primary signals:
 - Task risk: prod facing, security, payments, auth, migrations, data integrity.
-- Task scope: number of files touched, cross module changes, refactor breadth.
+- Task scope: number of files touched, cross-module changes, refactor breadth.
 - Uncertainty: unclear requirements, missing constraints, ambiguous intent.
-- User intent: user explicitly asks for speed vs rigor.
+- Reversibility: easy undo vs one-way door.
+- User outcome: Explore, Discuss, Review, Patch, Feature, or Build.
 
 Secondary signals:
 - Time pressure hints: “quick”, “fast”, “just do it”, “ship today”.
 - Prior failures: repeated rewrites, drift, frequent misunderstandings.
-- IDE constraints: some IDEs truncate context, some models ignore instructions.
+- Context cost: how much should be loaded vs deferred.
 
-If unsure, default to Streamlined.
+Interpretation rules:
+- Do not mirror the user's urgency or confidence.
+- Classify independently.
+- When unsure between two valid classifications, choose the simpler one first and escalate only with evidence.
+- Prefer the lightest path that still protects correctness.
 
-## Quick
+## Internal change magnitude heuristic
+
+Use this heuristic internally to support mode and depth selection:
+
+- **tiny** — almost mechanical, local, low-risk
+- **bounded** — clearly scoped, limited blast radius
+- **meaningful** — real behavior or capability change, moderate impact
+- **systemic** — broad design, architecture, or multi-surface impact
+
+This heuristic is internal only. It does not replace Mode or Depth.
+
+If unsure, default to **Patch** or **Explore** on Mode, and **balanced** on Depth.
+
+## Minimal
 
 Use when:
-- Small, local change.
+- Small, local, reversible work.
 - Low risk.
-- User wants speed.
+- The lightest useful loop is enough.
 
 Behavior:
-- Ask at most 2 clarifying questions, only if blocking.
-- Research is shallow: confirm location and current behavior only.
-- Planning is minimal: 1 approach, mention 1 alternative if it is obviously safer.
-- Evidence: include only the highest value file references.
-- Memory: not required. Skip memory operations.
-- Output length: short.
+- Load only the smallest relevant context slice.
+- Research focuses on classification, local evidence, and whether the loop can stop early.
+- Planning may be no doc or a brief plan.
+- Packaging is concise but still reviewable.
+- Memory is optional.
 
-Checkpoints:
-- Single checkpoint before implementation: “Proceed? [yes or no]”.
-
-## Streamlined
+## Balanced
 
 Use when:
-- Default mode for most work.
-- Moderate complexity, moderate risk.
-- User wants quality but not ceremony.
+- Default depth for most work.
+- Moderate complexity or ambiguity.
+- The task benefits from explicit trade-offs but not full ceremony.
 
 Behavior:
-- Ask up to 4 clarifying questions if needed.
-- Research: identify relevant code paths, constraints, and risks.
-- Planning: present 2 options with trade offs.
-- Evidence: include file path and line or function where possible.
-- Memory: not required. Use only if the task is complex enough that losing context would cause rework.
-- Output length: medium.
+- Research maps relevant paths, constraints, and risks.
+- Planning challenges assumptions and selects the lightest useful artifact.
+- Implementation validates continuously and ends with reviewable work plus proportional delivery artifacts when useful.
+- Memory is optional but recommended if the task is likely to span turns.
 
-Checkpoints:
-- End of Research: “Does this match? [yes or no]”
-- End of Planning: “Ready to implement? [yes or no]”
-
-## Thoughtful
+## Full
 
 Use when:
-- High risk domains: auth, payments, permissions, migrations, caching correctness, concurrency.
-- Cross cutting changes.
-- The user explicitly wants a careful plan.
+- High risk, high ambiguity, or broad blast radius.
+- One-way doors, migrations, security-sensitive work, or cross-cutting changes.
+- The user explicitly asks for maximum rigor.
 
 Behavior:
-- Ask clarifying questions until requirements are stable.
-- Research: deeper scan, map dependencies, identify edge cases.
-- Planning: 2 or 3 approaches, explicit trade offs (complexity, risk, time).
-- Add a “failure modes” section (what can go wrong and how to detect).
-- Include a test plan.
-- Memory: required. Write memory artifacts at phase transitions.
+- Research is deeper and more skeptical.
+- Planning includes stronger trade-off challenge, failure modes, and heavier artifact support when justified.
+- Implementation uses tighter slicing, stronger validation, and richer packaging.
+- Memory is required.
 
-Checkpoints:
-- Research checkpoint.
-- Planning checkpoint.
-- Pre implementation checkpoint: confirm scope and test plan.
+## Depth escalation and de-escalation
 
-## Comprehensive
-
-Use when:
-- Very high risk or large scope.
-- Architecture changes, multi service refactors, performance work, incident remediation with unknown root cause.
-- User explicitly requests maximum rigor.
-
-Behavior:
-- Research: include a structured report (current behavior, constraints, unknowns, decision drivers).
-- Planning: 3 approaches, plus a “do nothing” or “minimal change” baseline when relevant.
-- Include rollout plan, monitoring, and rollback.
-- Include a risk register: top risks and mitigations.
-- Memory: required. Write memory artifacts at phase transitions and capture all decisions.
-
-Checkpoints:
-- Research checkpoint.
-- Planning checkpoint.
-- Implementation staging: implement in slices, each slice confirmed by the user.
-
-## Mode escalation and de escalation
-
-The assistant MUST escalate mode when:
+The assistant MUST escalate depth when:
 - New information increases risk.
-- The change touches security, money, data integrity, or customer experience.
-- The scope expands beyond the original request.
+- The blast radius grows.
+- The request shifts from explanation or review into execution.
 
-The assistant SHOULD de escalate mode when:
-- The request becomes clearly small and local.
-- The user signals impatience and accepts risk.
+The assistant SHOULD de-escalate depth when:
+- The task becomes clearly small and local.
+- Research shows that more ceremony would not improve the outcome.
 
 ## Escape phrases
 
-User phrases that force Quick:
+User phrases that usually push toward minimal:
 - “quick”
 - “skip planning”
 - “just do it”
 - “ignore framework”
 
-User phrases that force Thoughtful or Comprehensive:
+User phrases that usually push toward full:
 - “be careful”
 - “do a full plan”
 - “treat this as high risk”

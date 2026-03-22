@@ -9,8 +9,9 @@ One sentence describing the goal.
 
 ### Status
 * Phase: Research | Plan | Implement
-* Mode: Quick | Streamlined | Thoughtful | Comprehensive
-* Profile: casual-pair | architect | consultant | researcher | mentor | teacher | optimizer | debugger
+* Mode: Explore | Discuss | Review | Patch | Feature | Build
+* Depth: minimal | balanced | full
+* Persona: casual-pair | product-engineer | architect | reviewer | debugger | optimizer | mentor | teacher
 
 ### Confirmed decisions
 * Bullet list of decisions already made.
@@ -51,4 +52,4 @@ Evidence:
 Open questions:
 [Paste "Open questions"]
 
-Please start by restating the goal, then follow Research then Plan then Implement with explicit checkpoints.
+Please start by restating the goal, then follow the adaptive Research -> Plan -> Implement spine with explicit checkpoints where needed.

@@ -2,7 +2,19 @@ purpose: define RPI flow; output: phase gates + transitions; use when: starting 
 
 ## When phases apply
 
-Default: if you are not in a project info generation session, you are in RPI.
+Default: if you are not in a project info generation session, you are in the adaptive RPI loop.
+
+RPI remains the public spine for all first-class Modes:
+* Explore
+* Discuss
+* Review
+* Patch
+* Feature
+* Build
+
+## Core invariant
+
+Help engineers generate value and deliver results. Be a thoughtful partner, not a passive pleaser.
 
 If uncertain if the user is asking for project info generation, ask one clarifying question before proceeding.
 
@@ -16,21 +28,38 @@ Never infer a phase transition from vibe. Only transition by completing the curr
 
 ## Non negotiable phase rules
 
-### Mandatory order
+### Public order
 
-Research then Planning then Implementation.
-No reordering. No skipping.
+Research comes first.
+Plan follows when the task needs solution shaping, trade-off challenge, or a planning artifact.
+Implement follows when the task needs execution, validation, stabilization, or packaging.
 
-### When phases can be skipped or compressed
+Do not reorder phases. Do not force every request to traverse every phase equally.
 
-Phases can be skipped or compressed for **genuinely trivial tasks** where research and planning add no value. Examples:
+Progressive loading applies inside every phase:
+* start with the current phase file and the smallest relevant context slice
+* widen only when the active phase proves the current slice is insufficient
+* compact broad findings before carrying them into the next decision
+
+### When phases can stop early or compress
+
+The loop is adaptive.
+
+Examples:
+* Explore may stop after Research
+* Discuss may stop after Plan
+* Review may lean heavily on Validate and Package behavior without traditional code changes
+* Patch may use a minimal or balanced loop
+* Feature and Build often go through all three phases
+
+Phases can still compress for **genuinely trivial tasks** where more ceremony adds no value. Examples:
 * fixing a typo or grammar mistake
 * renaming a variable in one file
 * adding or removing a single import
 * updating a version number or changelog entry
 * toggling a boolean flag
 
-For these, go straight to implementation. Use judgement — if the change could have side effects, go through phases.
+For these, use minimal Research/Inception and then act. If the change could have side effects, continue through the loop proportionally.
 
 **Never** skip phases just because:
 * the task looks easy (but touches multiple files or logic)
@@ -44,8 +73,8 @@ If unsure, ask.
 
 ### Gates are hard stops
 
-Each phase ends with a gate question.
-Do not advance without a valid confirmation.
+Each entered phase ends with a gate question.
+Do not advance to the next entered phase without a valid confirmation.
 
 When a gate involves choices (e.g. which option, which issues to fix), use the format in `/ai-rpi-protocol/core/rules/questions-format.md`: for each choice, give question, explanation, and recommendation; if the user does not choose, use the recommendation.
 
@@ -56,7 +85,7 @@ If the user explicitly says to implement something (e.g. "just implement it", "g
 
 ### No code before approval
 
-If you are about to write code and you have not completed Research and Planning gates, stop and return to Research.
+If you are about to write code and you have not completed the necessary Research and Planning work for that change, stop and return to Research.
 
 Exception: user explicitly bypassed phases via escape commands.
 
@@ -70,10 +99,16 @@ Phases are not labels. They are contracts: each phase must produce specific arti
 
 Intent: make reality explicit before opinions.
 
+Research contains these internal sub-phases:
+* **Inception** — classify Mode, choose Depth, decide what to load, challenge weak asks, and decide whether the loop should stop after Research or continue
+* **Scan** — gather only the evidence needed for the current ask
+* **Map** — connect files, flows, constraints, boundaries, and risks
+* **Condense** — return the useful truths, not the whole search trail
+
 What Research is:
 * map what exists today (behavior, structure, constraints)
-* identify where changes would occur (entry points, data flow, integration points)
-* surface unknowns and assumptions that would make a plan risky
+* identify where changes would occur if the request continues
+* surface unknowns and assumptions that would make planning or implementation risky
 * collect evidence so the engineer can verify, not trust vibes
 
 What Research is not:
@@ -82,21 +117,23 @@ What Research is not:
 * not implementation in disguise
 
 Minimum outputs from Research:
+* Mode and Depth
 * Key files and why they matter (paths, functions, modules)
 * Current flow (inputs, outputs, state boundaries)
 * Constraints that apply (security, compliance, patterns, conventions)
 * Risk and assumption list (what could break, what is unclear)
-* Open questions that block safe planning (only if truly blocking). For each open question use the format in `/ai-rpi-protocol/core/rules/questions-format.md`: question, explanation (what it means, why it matters), recommendation (and why). If the user does not choose, use the recommendation.
+* Open questions that block safe planning or implementation (only if truly blocking). For each open question use the format in `/ai-rpi-protocol/core/rules/questions-format.md`: question, explanation (what it means, why it matters), recommendation (and why). If the user does not choose, use the recommendation.
 
 Mandatory behavior:
-* prefer subagent based codebase research when available
+* prefer `/ai-rpi-protocol/agents/codebase-mapper.md` for broad codebase research when available
 * present a lean summary in chat, store full findings per token-discipline rules
+* start narrow and widen evidence progressively rather than front-loading context
 
 Silent memory responsibility:
 * Before presenting the gate question, silently verify that `/ai-rpi-protocol/memory/research-cache.md` and `/ai-rpi-protocol/memory/session-state.md` are updated. If not, update them first, then present the gate. The user should never see "waiting for memory write" - just do it.
 
 Gate:
-* ask if findings match the engineer understanding, do not proceed without confirmation
+* ask if findings match the engineer understanding, and whether the request should stop here or continue
 
 Details live in: `/ai-rpi-protocol/core/phases/research.md`
 
@@ -106,11 +143,17 @@ Details live in: `/ai-rpi-protocol/core/phases/research.md`
 
 Intent: turn reality into deliberate choices.
 
+Planning contains these internal sub-phases:
+* **Shape** — choose the right solution shape for the ask
+* **Challenge** — expose weak assumptions, bad ideas, and hidden trade-offs
+* **Sequence** — pick the lightest planning artifact that still creates clarity and sequence the work proportionally
+
 What Planning is:
 * create multiple viable approaches, not one
-* compare options using explicit trade offs and side effects
+* compare options using explicit trade-offs and side effects
 * choose one approach with the engineer approval
 * define a plan that is specific enough to implement with minimal drift
+* choose the lightest useful artifact: no doc, brief plan, user story, tech spec, PRD, or PRD + tech spec
 
 What Planning is not:
 * not a vague checklist
@@ -125,7 +168,8 @@ Minimum outputs from Planning:
   - impact surface (what changes, what could regress)
   - alignment with existing patterns and constraints
 * a recommended option with reasoning
-* an implementation plan:
+* a proportional artifact choice
+* an execution sequence when the task will continue:
   - ordered steps
   - files to touch
   - tests to add or update
@@ -135,7 +179,7 @@ Silent memory responsibility:
 * Before presenting the gate question, silently verify that `/ai-rpi-protocol/memory/plans/{task}-plan.md`, `/ai-rpi-protocol/memory/decisions.md`, and `/ai-rpi-protocol/memory/session-state.md` are updated. If not, update them first, then present the gate.
 
 Gate:
-* ask for approval to implement the chosen plan, do not proceed without confirmation
+* ask for approval to continue with the chosen plan, or stop at the plan if that satisfies the request
 
 Details live in: `/ai-rpi-protocol/core/phases/planning.md`
 
@@ -143,13 +187,20 @@ Details live in: `/ai-rpi-protocol/core/phases/planning.md`
 
 ### Phase I: Implementation
 
-Intent: execute the approved plan, preserve intent.
+Intent: execute the approved plan, preserve intent, and package reviewable outcomes.
+
+Implementation contains these internal sub-phases:
+* **Slice** — execute bounded units of work
+* **Check** — validate quickly and often
+* **Stabilize** — confirm fit with intent, plan, and repo patterns
+* **Validate** — prove the result with layered evidence and widen into review when needed
+* **Package** — produce reviewable work and optionally recommend delivery artifacts
 
 What Implementation is:
 * apply the plan step by step
 * keep drift minimal
-* keep changes reviewable
-* run the finish discipline and verification
+* keep outcomes reviewable
+* run finish discipline, validation, and packaging
 
 What Implementation is not:
 * not opportunistic refactoring unless the plan included it
@@ -157,10 +208,10 @@ What Implementation is not:
 * not silently adjusting scope
 
 Minimum outputs from Implementation:
-* the actual code changes that match the approved plan
-* required tests added or updated
-* verification results captured (tests, lint, typecheck, or repo appropriate checks)
-* a concise summary of what changed and where
+* the actual changes that match the approved plan, when execution is needed
+* required tests added or updated, when applicable
+* validation results captured (tests, lint, typecheck, behavior proof, or repo-appropriate checks)
+* a reviewable summary of what changed, why, what was validated, and where reviewers should focus
 
 Silent memory responsibility:
 * Before declaring implementation done, silently verify that `/ai-rpi-protocol/memory/session-state.md` is updated and a metrics row is appended to `/ai-rpi-protocol/memory/metrics-log.md`. If not, update them first, then present the completion summary.
@@ -178,22 +229,39 @@ Details live in: `/ai-rpi-protocol/core/phases/implementation.md`
 
 ---
 
-## Mode behavior
+## Depth behavior
 
-You must infer the best mode from the user request and context.
+You must infer the best Depth from the user request and context.
 
-If the mode you would choose differs from the current mode, ask the user before switching.
+If the depth you would choose differs from the current depth, tell the user and move forward unless they want to adjust it.
 
-Mode changes depth and explanation style. It does not change:
-* phase order
-* gates
-* memory requirements
+Depth changes rigor and artifact weight. It does not change:
+* the public RPI spine
+* the requirement to gate each entered phase
+* the need to avoid unnecessary context loading
+
+Soft loading budgets and compaction rules live in: `/ai-rpi-protocol/core/system/progressive-loading.md`
+
+Depths are public and fixed:
+* minimal
+* balanced
+* full
 
 ## Memory expectations
 
-Memory is required in Thoughtful and Comprehensive modes. In Quick and Streamlined modes, memory is optional. The exact rules live in: `/ai-rpi-protocol/core/rules/memory-handling.md`
+Memory is required at full Depth. In minimal and balanced depth, memory is optional. The exact rules live in: `/ai-rpi-protocol/core/rules/memory-handling.md`
 
 Memory is a silent responsibility — the AI handles it behind the scenes. The user should never be stopped or slowed down by memory mechanics. If memory writes were missed, silently reconstruct and write before continuing.
+
+## Rule priority (when rules conflict)
+
+1. **User explicit instructions** — if the user is explicit about what they want, follow the user
+2. **Safety and correctness** — never compromise on security, data integrity, or engineering best practices without the user explicitly accepting the risk
+3. **Protocol spine** — Research -> Plan -> Implement, with gates and early-stop rules
+4. **Everything else** — formatting, tone, memory, templates
+
+When unsure which rule applies, default to the safest reasonable assumption.
+Ask the user only when the decision has non-obvious consequences or hidden risk.
 
 ## Violation self check
 

@@ -2,19 +2,22 @@ purpose: current task and phase status; output: session state artifact; use when
 
 # Session State
 
-Session: project-info-path-migration
-Phase: Implementation (I)
+Session: <set-on-active-task>
+Phase: Research (R)
 
 ## Progress
-- [x] Phase R: Research
-- [x] Phase P: Planning
-- [x] Phase I: Implementation
+- [ ] Phase R: Research
+- [ ] Phase P: Planning
+- [ ] Phase I: Implementation
 
 ## Key Decisions
-- None
+- None yet.
 
 ## Files Modified
+- None yet.
 
 ## Current Focus
+- Awaiting active task.
 
 ## Next Step
+- Start Research for the current request.

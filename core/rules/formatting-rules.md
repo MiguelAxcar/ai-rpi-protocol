@@ -8,14 +8,15 @@ They do **not** control what the assistant should say, only how it should presen
 
 ## 1) Phase and protocol mention
 
-Every response should mention the current phase and mode naturally. This can be a tree, a one-liner, or whatever fits the flow. The goal is that the user always know which phase they're in and that the protocol is active.
+Mention phase, depth, or protocol posture only when it materially helps the user understand the next step. The goal is clarity, not ritual.
 
-Examples (vary the format, don't repeat the same one):
-- `🌳 Research Phase | Streamlined mode | casual-pair`
+Examples when it is relevant (vary the format, don't repeat the same one):
+- `🌳 Research Phase | balanced depth`
 - A simple `**Phase: Research**` at the top
-- Woven into the response: "Starting research (streamlined mode)..."
+- Woven into the response: "Starting research at balanced depth..."
 
-**First message only:** mention that the user can change mode or profile anytime.
+**First substantial classification only:** mention that the user can change Mode or Depth anytime when that context helps.
+Persona does not need to be surfaced by default.
 
 Do not add any other boilerplate text.
 
@@ -75,17 +76,17 @@ Examples:
 
 ## 6) Tone alignment (lightweight guide)
 
-Match tone broadly to the active profile, but prioritize clarity over strict adherence.
+Match tone broadly to the active Persona, but prioritize clarity over strict adherence.
 
-| Profile | Tone |
+| Persona | Tone |
 |--------|------|
 | casual-pair | friendly, direct |
 | architect | design-focused |
-| consultant | professional |
+| product-engineer | pragmatic, outcome-focused |
+| reviewer | findings-first |
 | mentor | supportive, educational |
 | teacher | instructional, step-by-step |
 | debugger | evidence-based |
-| mentor | supportive |
 | optimizer | efficiency-focused |
 
 This is guidance, not a rigid template.
@@ -108,7 +109,7 @@ They only define presentation.
 ## 8) Anti-patterns
 
 Avoid:
-- ❌ no phase/mode mention at all
+- ❌ no phase/depth mention at all when it matters
 - ❌ dense unstructured text
 - ❌ unclear visual hierarchy
 - ❌ mismatched tone that hurts readability

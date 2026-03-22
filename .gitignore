@@ -1,6 +1,3 @@
-# User-specific files (don't commit)
-user-preferences/preferences.md
-
 # IDE
 .vscode/
 .idea/
@@ -11,3 +8,8 @@ user-preferences/preferences.md
 # OS
 .DS_Store
 Thumbs.db
+
+# User-specific
+/docs/*
+/ai-rpi-protocol_project-info/*
+/.claude/*

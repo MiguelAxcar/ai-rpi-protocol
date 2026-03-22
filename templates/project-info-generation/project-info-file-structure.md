@@ -17,6 +17,16 @@ purpose: define project info files; output: file list and one line rules; use wh
 
 **Rule:** If it might change in 6 months, ask before documenting.
 
+## Setup Lifecycle Fit
+
+Project-info is part of setup lifecycle, not a throwaway generation step.
+
+Rules:
+- bootstrap it once
+- update it in place when the project changes materially
+- preserve durable files across protocol upgrades
+- treat `memory.md` and `user-preferences.md` as long-lived project-owned context
+
 ---
 
 ## 📋 Recommended File Set
@@ -27,7 +37,31 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ## Core Files (Always Generated)
 
-### 1. `overview.md`
+### 1. `memory.md`
+**Purpose:** Durable project memory that should be loaded early on every interaction
+**Content:**
+- Stable project-specific facts worth remembering
+- Repeated pitfalls and prevention guidance
+- Durable workflow knowledge that reduces future repetition
+- Important learned patterns that should survive protocol upgrades
+
+**Why:** Gives AI-RPI a durable project memory layer instead of scattering lessons across session artifacts
+
+---
+
+### 2. `user-preferences.md`
+**Purpose:** Stable user preferences for this project; loaded early on every interaction
+**Content:**
+- Confirmed project-scoped user preferences
+- Durable repo-specific workflow choices
+- Preferred validation or handoff behavior
+- Inferred likely preferences only when clearly labeled and worth preserving
+
+**Why:** Gives the user a project-owned preference surface that survives sessions and upgrades
+
+---
+
+### 3. `overview.md`
 **Purpose:** High-level project overview, domain, purpose, stakeholders
 **Content:**
 - What this project is (domain, business purpose)
@@ -41,7 +75,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
-### 2. `constraints.md`
+### 4. `constraints.md`
 **Purpose:** Non-negotiable rules that must never be violated
 **Content:**
 - Compliance requirements (HIPAA, PCI, GDPR, SOC2, etc.)
@@ -55,7 +89,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
-### 3. `glossary.md`
+### 5. `glossary.md`
 **Purpose:** Domain terminology and key terms
 **Content:**
 - Business domain terms
@@ -68,7 +102,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
-### 4. `structure.md`
+### 6. `structure.md`
 **Purpose:** High-level codebase structure and organization
 **Content:**
 - Project structure (monorepo, microservices, single app, etc.)
@@ -82,7 +116,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
-### 5. `stack-patterns.md` (Stack-Specific)
+### 7. `stack-patterns.md` (Stack-Specific)
 **Purpose:** Coding patterns, conventions, architecture patterns for detected stack
 **Content:**
 - **Detected from codebase:** Framework-specific patterns
@@ -104,7 +138,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
-### 6. `standards.md`
+### 8. `standards.md`
 **Purpose:** Code style, testing, git practices, performance standards
 **Content:**
 - Code formatting rules (ESLint, Prettier, Black, etc.)
@@ -121,7 +155,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ## Optional Files (Generated If Applicable)
 
-### 7. `integrations.md` (If external integrations exist)
+### 9. `integrations.md` (If external integrations exist)
 **Purpose:** External services, APIs, third-party integrations
 **Content:**
 - External APIs used (REST, GraphQL, SOAP)
@@ -135,7 +169,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
-### 8. `monitoring.md` (If production monitoring exists)
+### 10. `monitoring.md` (If production monitoring exists)
 **Purpose:** Logging, metrics, tracing, debugging
 **Content:**
 - Logging strategy (structured logs, log levels)
@@ -146,20 +180,6 @@ Based on best practices and your existing codebase, here's the proposed structur
 - Performance monitoring
 
 **When:** Detect from codebase (logging libraries, metrics endpoints, monitoring tools)
-
----
-
-### 9. `custom-instructions.md` (Always generated)
-
-**Purpose:** User-defined instructions and preferences; fully editable by the user.
-**Content:**
-- Header telling the user they are free to add whatever they want (with examples)
-- Placeholder examples of custom instructions (e.g. "When commenting code, explain WHY not WHAT")
-- Bullet list for the user to add their own items
-
-**Why:** Gives the user a single place to express preferences (tone, code style, process) that the assistant loads with project info. Not stable project truth — it's owned by the user.
-
-**Generation:** Always create this file when generating project info. Use content from `/ai-rpi-protocol/core/project-info/custom-instructions-template.md`.
 
 ---
 
@@ -175,6 +195,18 @@ Based on best practices and your existing codebase, here's the proposed structur
 
 ---
 
+## Ownership Model
+
+| Surface | Ownership | Notes |
+|---------|-----------|-------|
+| `/ai-rpi-protocol_project-info/memory.md` | project-owned | durable project memory; preserve across upgrades |
+| `/ai-rpi-protocol_project-info/user-preferences.md` | project-owned | durable project-scoped preferences; preserve across upgrades |
+| remaining `/ai-rpi-protocol_project-info/*.md` | project-owned | generated once, then maintained in place |
+
+Project-info should not be wiped just because the protocol itself is upgraded.
+
+---
+
 ## Directory Structure
 
 ```
@@ -182,6 +214,8 @@ Based on best practices and your existing codebase, here's the proposed structur
 ├── /ai-rpi-protocol/
 └── /ai-rpi-protocol_project-info/
     ├── overview.md              # Core: Project overview
+    ├── memory.md                # Core: Durable project memory
+    ├── user-preferences.md      # Core: Durable project-scoped preferences
     ├── constraints.md           # Core: Non-negotiable rules
     ├── glossary.md              # Core: Domain terminology
     ├── structure.md             # Core: Structure & organization
@@ -190,22 +224,22 @@ Based on best practices and your existing codebase, here's the proposed structur
     │
     ├── integrations.md          # Optional: External services
     ├── monitoring.md            # Optional: Monitoring & debugging
-    └── custom-instructions.md   # User preferences (always generated)
 ```
 
 ---
 
 ## Generation Order
 
-1. **overview.md** (foundation)
-2. **constraints.md** (safety first)
-3. **structure.md** (structure understanding)
-4. **stack-patterns.md** (pattern detection)
-5. **glossary.md** (terminology extraction)
-6. **standards.md** (quality standards)
-7. **integrations.md** (if detected)
-8. **monitoring.md** (if detected)
-9. **custom-instructions.md** (always; user edits after generation)
+1. **memory.md** (durable project memory)
+2. **user-preferences.md** (durable project-scoped preferences)
+3. **overview.md** (foundation)
+4. **constraints.md** (safety first)
+5. **structure.md** (structure understanding)
+6. **stack-patterns.md** (pattern detection)
+7. **glossary.md** (terminology extraction)
+8. **standards.md** (quality standards)
+9. **integrations.md** (if detected)
+10. **monitoring.md** (if detected)
 
 ---
 
@@ -234,6 +268,7 @@ Based on best practices and your existing codebase, here's the proposed structur
 ## Benefits of This Structure
 
 ✅ **Comprehensive:** Covers all essential project context
+✅ **Durable:** Separates persistent project context from disposable session memory
 ✅ **Modular:** Generate only what's needed
 ✅ **Stack-Agnostic:** Works for any project type
 ✅ **Stack-Specific:** Detects and adapts to actual stack

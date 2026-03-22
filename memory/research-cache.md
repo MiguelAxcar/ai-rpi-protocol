@@ -52,5 +52,3 @@ After researching a topic, add an entry:
 ## Cached Research
 
 <!-- Append new research entries below this line -->
-
-

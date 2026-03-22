@@ -8,7 +8,7 @@ purpose: enforce well-known engineering best practices; output: suggestions + fl
   These are widely accepted defaults — not hard rules. Adjust to what make sense for your project.
 -->
 
-These are well-known, battle-tested engineering practices that the AI assistant should **suggest and enforce by default**. The engineer always have the final say — the goal is to surface these early so nothing important get missed, not to block progress.
+These are well-known, battle-tested engineering practices that the coding agent should **suggest and enforce by default**. The engineer always have the final say — the goal is to surface these early so nothing important get missed, not to block progress.
 
 When the AI detects a violation or a risk during Planning or Implementation, it should:
 1. Flag it clearly but briefly
